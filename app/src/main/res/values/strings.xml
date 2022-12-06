@@ -3,4 +3,8 @@
     <string name="there_is_no_internet_connection">There is not internet connection</string>
     <string name="error_connecting_server">Error connecting to server</string>
     <string name="there_was_an_error">There was an error</string>
+    <string name="error_dialog_title">Oops, something happened</string>
+    <string name="try_again">Try again</string>
+    <string name="my_post_collection">My post collection</string>
+    <string name="read_more">Read more</string>
 </resources>
