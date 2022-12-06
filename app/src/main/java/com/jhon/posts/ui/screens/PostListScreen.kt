@@ -37,7 +37,6 @@ fun PostListScreen(
     val usersList: List<User> = viewModel.usersList.value
 
     Scaffold(
-        topBar = { PostListScreenTopBar {} }
     ) {
         LazyColumn {
             items(postList) { post ->
@@ -59,16 +58,4 @@ fun PostListScreen(
             messageId = status.messageId,
             onErrorDialogDismiss = { viewModel.resetApiResponseStatus() })
     }
-}
-
-@Composable
-fun PostListScreenTopBar(onClick: () -> Unit) {
-    TopAppBar(
-        title = { Text(text = stringResource(R.string.my_post_collection)) },
-        backgroundColor = MaterialTheme.colors.primary,
-        contentColor = MaterialTheme.colors.surface,
-        navigationIcon = { },
-        elevation = dimensionResource(id = R.dimen.elevation_top_bar),
-        modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.margin_bottom_top_bar))
-    )
 }
