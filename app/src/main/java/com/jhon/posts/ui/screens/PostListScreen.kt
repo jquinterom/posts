@@ -1,6 +1,7 @@
 package com.jhon.posts.ui.screens
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,7 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jhon.posts.R
 import com.jhon.posts.api.ApiResponseStatus
+import com.jhon.posts.constants.FAKE_USER
 import com.jhon.posts.model.Post
+import com.jhon.posts.model.User
 import com.jhon.posts.ui.composables.ErrorDialog
 import com.jhon.posts.ui.composables.LoadingWheel
 import com.jhon.posts.ui.composables.PostCard
@@ -31,13 +34,21 @@ fun PostListScreen(
 ) {
     val status = viewModel.status.value
     val postList: List<Post> = viewModel.postList.value
+    val usersList: List<User> = viewModel.usersList.value
 
     Scaffold(
         topBar = { PostListScreenTopBar {} }
     ) {
         LazyColumn {
             items(postList) { post ->
-                PostCard(post = post)
+                var user = FAKE_USER
+
+                usersList.map { userItem ->
+                    if(userItem.id == post.userId){
+                        user = userItem
+                    }
+                }
+                PostCard(post = post, user = user)
             }
         }
     }

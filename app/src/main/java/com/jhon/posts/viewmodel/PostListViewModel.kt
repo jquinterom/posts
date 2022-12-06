@@ -6,41 +6,65 @@ import androidx.lifecycle.viewModelScope
 import com.jhon.posts.api.ApiResponseStatus
 import com.jhon.posts.interfaces.PostTasks
 import com.jhon.posts.model.Post
+import com.jhon.posts.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PostListViewModel @Inject constructor(
-    private val postRepository: PostTasks
-): ViewModel(){
+    private val postRepository: PostTasks,
+) : ViewModel() {
     var postList = mutableStateOf<List<Post>>(listOf())
-    private set
+        private set
 
     var status = mutableStateOf<ApiResponseStatus<Any>?>(null)
-    private set
+        private set
+
+    var usersList = mutableStateOf<List<User>>(listOf())
+        private set
 
     init {
         getPostCollection()
+        getUserCollection()
     }
 
     private fun getPostCollection() {
         viewModelScope.launch {
             status.value = ApiResponseStatus.Loading()
-            handleResponseStatus(postRepository.getPostsCollection())
+            handleResponseStatusPosts(postRepository.getPostsCollection())
+        }
+    }
+
+    private fun getUserCollection() {
+        viewModelScope.launch {
+            status.value = ApiResponseStatus.Loading()
+            handleResponseStatusUsers(postRepository.getUsersCollection())
         }
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun handleResponseStatus(apiResponseStatus: ApiResponseStatus<List<Post>>) {
-        if(apiResponseStatus is ApiResponseStatus.Success){
-            postList.value = apiResponseStatus.data
+    private fun handleResponseStatusPosts(
+        apiResponseStatusListPosts: ApiResponseStatus<List<Post>>,
+    ) {
+        if (apiResponseStatusListPosts is ApiResponseStatus.Success) {
+            postList.value = apiResponseStatusListPosts.data
         }
 
-        status.value = apiResponseStatus as ApiResponseStatus<Any>
+        status.value = apiResponseStatusListPosts as ApiResponseStatus<Any>
     }
 
-    fun resetApiResponseStatus(){
+    @Suppress("UNCHECKED_CAST")
+    private fun handleResponseStatusUsers(
+        apiResponseStatusListUsers: ApiResponseStatus<List<User>>
+    ) {
+        if (apiResponseStatusListUsers is ApiResponseStatus.Success) {
+            usersList.value = apiResponseStatusListUsers.data
+        }
+        status.value = apiResponseStatusListUsers as ApiResponseStatus<Any>
+    }
+
+    fun resetApiResponseStatus() {
         status.value = null
     }
 }

@@ -13,17 +13,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.jhon.posts.R
 import com.jhon.posts.model.Post
+import com.jhon.posts.model.User
+import java.util.*
 
 @OptIn(ExperimentalTextApi::class, ExperimentalMaterialApi::class)
 @Composable
-fun PostCard(post: Post) {
+fun PostCard(post: Post, user: User) {
     val gradientColors = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
 
     Card(
@@ -49,7 +55,7 @@ fun PostCard(post: Post) {
         ) {
             Text(
                 modifier = Modifier.align(alignment = Alignment.Start),
-                text = post.title,
+                text = post.title.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
                 style = TextStyle(
                     brush = Brush.linearGradient(
                         colors = gradientColors
@@ -60,8 +66,9 @@ fun PostCard(post: Post) {
             Text(
                 modifier = Modifier.align(alignment = Alignment.End),
                 fontStyle = FontStyle.Italic,
+                fontWeight = FontWeight.Bold,
                 fontSize = 10.sp,
-                text = "Author ..."
+                text = user.name
             )
         }
 
@@ -71,5 +78,8 @@ fun PostCard(post: Post) {
 @Preview
 @Composable
 fun PostCardPreview() {
-    PostCard(post = Post(1, 1, "Title card", "Body"))
+    PostCard(
+        post = Post(1, 1, "Title card", "Body"),
+        user = User(1, "Jhon", "jhon1", "j@j.com")
+    )
 }

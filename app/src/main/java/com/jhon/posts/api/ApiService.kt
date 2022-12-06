@@ -1,12 +1,16 @@
 package com.jhon.posts.api
 
 import com.jhon.posts.api.dto.PostDTO
+import com.jhon.posts.api.dto.UserDTO
 import com.jhon.posts.constants.GET_ALL_POSTS_URL
-import com.jhon.posts.api.responses.PostListApiResponse
+import com.jhon.posts.constants.GET_ALL_USERS_URL
 import retrofit2.http.GET
 
 interface ApiService {
     @GET(GET_ALL_POSTS_URL)
     //suspend fun getAllPosts(): PostListApiResponse
     suspend fun getAllPosts(): List<PostDTO>
+
+    @GET(GET_ALL_USERS_URL)
+    suspend fun getAllUsers(): List<UserDTO>
 }
