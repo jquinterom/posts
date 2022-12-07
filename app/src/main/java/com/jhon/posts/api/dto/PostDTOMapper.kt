@@ -17,4 +17,5 @@ class PostDTOMapper {
             formPostDTOToPostDomain(it)
         }
     }
+
 }

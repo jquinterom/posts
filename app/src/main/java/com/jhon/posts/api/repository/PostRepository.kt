@@ -7,6 +7,7 @@ import com.jhon.posts.api.dto.PostDTOMapper
 import com.jhon.posts.api.dto.UserDTOMapper
 import com.jhon.posts.api.makeNetworkCall
 import com.jhon.posts.interfaces.PostTasks
+import com.jhon.posts.model.Comment
 import com.jhon.posts.model.Post
 import com.jhon.posts.model.User
 import kotlinx.coroutines.CoroutineDispatcher
@@ -63,6 +64,41 @@ class PostRepository @Inject constructor(
         }
     }
 
+    override suspend fun getPostById(postId: Int): ApiResponseStatus<Post> {
+        return withContext(dispatcher) {
+            val postResponseDeferred = async { downloadPost(postId) }
+            val postResponse = postResponseDeferred.await()
+
+            when{
+                postResponse is ApiResponseStatus.Error -> {
+                    postResponse
+                }
+
+                postResponse is ApiResponseStatus.Success -> {
+                    ApiResponseStatus.Success(
+                        getPost(
+                            postResponse.data
+                        )
+                    )
+                }
+                else -> {
+                    ApiResponseStatus.Error(R.string.there_was_an_error_users)
+                }
+            }
+        }
+    }
+
+
+    private fun getPost(post: Post) = post
+
+    override suspend fun getCommentByPostId(): ApiResponseStatus<Comment> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getUserByPostId(): ApiResponseStatus<User> {
+        TODO("Not yet implemented")
+    }
+
     private fun getCollectionPostsList(allPostsList: List<Post>) =
         allPostsList.map { it }
 
@@ -82,5 +118,13 @@ class PostRepository @Inject constructor(
             val userDTOMapper = UserDTOMapper()
             userDTOMapper.fromUserDTOListToUserDomainList(usersListApiResponse)
         }
+
+    private suspend fun downloadPost(postId: Int): ApiResponseStatus<Post> =
+        makeNetworkCall {
+            val post = apiService.getPostById(postId)
+            val postDTOMapper = PostDTOMapper()
+            postDTOMapper.formPostDTOToPostDomain(postDTO = post)
+        }
+
 
 }

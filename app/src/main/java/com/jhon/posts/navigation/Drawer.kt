@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -43,13 +44,13 @@ fun Drawer(
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(15.dp)
+                .height(dimensionResource(id = R.dimen.size_normal_spacer))
         )
 
         val currentRoute = currentRoute(navController = navController)
         items.forEach { item ->
-            DrawerItem(item = item, selected = currentRoute == item.route){
-                navController.navigate(item.route){
+            DrawerItem(item = item, selected = currentRoute == item.route) {
+                navController.navigate(item.route) {
                     launchSingleTop = true
                 }
 
@@ -84,7 +85,7 @@ fun DrawerItem(
             contentDescription = item.title,
             tint = if (selected) Color.Blue else Color.Gray
         )
-        Spacer(modifier = Modifier.width(15.dp))
+        Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.size_normal_spacer)))
         Text(
             text = item.title, style = TextStyle(fontSize = 18.sp),
             color = if (selected) Color.Blue else Color.Black

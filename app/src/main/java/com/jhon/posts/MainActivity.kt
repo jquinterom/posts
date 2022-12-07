@@ -12,7 +12,6 @@ import com.jhon.posts.navigation.Destinations
 import com.jhon.posts.navigation.Drawer
 import com.jhon.posts.navigation.NavigationHost
 import com.jhon.posts.navigation.TopBar
-import com.jhon.posts.ui.screens.PostListScreen
 import com.jhon.posts.ui.theme.PostsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +21,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PostsTheme {
-                //PostListScreen()
                 MainScreen()
             }
         }

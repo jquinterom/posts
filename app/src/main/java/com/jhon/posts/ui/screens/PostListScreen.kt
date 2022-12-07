@@ -31,6 +31,7 @@ import com.jhon.posts.viewmodel.PostListViewModel
 @Composable
 fun PostListScreen(
     viewModel: PostListViewModel = hiltViewModel(),
+    onNavigateToPostDetail: (postId: Int) -> Unit,
 ) {
     val status = viewModel.status.value
     val postList: List<Post> = viewModel.postList.value
@@ -43,11 +44,14 @@ fun PostListScreen(
                 var user = FAKE_USER
 
                 usersList.map { userItem ->
-                    if(userItem.id == post.userId){
+                    if (userItem.id == post.userId) {
                         user = userItem
                     }
                 }
-                PostCard(post = post, user = user)
+                PostCard(
+                    post = post,
+                    user = user,
+                ) { onNavigateToPostDetail(post.id) }
             }
         }
     }
