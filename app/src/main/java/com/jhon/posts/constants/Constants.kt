@@ -9,7 +9,8 @@ const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 const val GET_ALL_POSTS_URL = "posts"
 const val GET_ALL_COMMENTS_URL = "comment"
 const val GET_ALL_USERS_URL = "users"
-const val GET_POST_BY_ID_URL = "posts/{postId}"
+const val GET_POST_BY_ID_URL = "$GET_ALL_POSTS_URL/{postId}"
+const val GET_USER_BY_ID_URL = "$GET_ALL_USERS_URL/{userId}"
 
 
 // Fake User

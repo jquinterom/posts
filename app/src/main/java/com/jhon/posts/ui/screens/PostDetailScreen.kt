@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
@@ -16,8 +17,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jhon.posts.R
+import com.jhon.posts.api.ApiResponseStatus
 import com.jhon.posts.constants.FAKE_POST
 import com.jhon.posts.model.Post
+import com.jhon.posts.model.User
+import com.jhon.posts.ui.composables.ErrorDialog
+import com.jhon.posts.ui.composables.LoadingWheel
 import com.jhon.posts.viewmodel.PostDetailViewModel
 
 
@@ -29,11 +34,21 @@ fun PostDetailScreen(
 ) {
     val status = viewModel.status.value
     val post: Post = viewModel.post.value
+    val user: User = viewModel.user.value
 
     viewModel.setPostId(postId)
     viewModel.getPostDetail()
 
     val gradientColors = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
+
+
+    if (status is ApiResponseStatus.Loading) {
+        LoadingWheel()
+    } else if (status is ApiResponseStatus.Error) {
+        ErrorDialog(
+            messageId = status.messageId,
+            onErrorDialogDismiss = { viewModel.resetApiResponseStatus() })
+    }
 
     Column(
         modifier = Modifier
@@ -44,8 +59,7 @@ fun PostDetailScreen(
             modifier = Modifier.align(alignment = Alignment.Start),
         ) {
             Text(
-                //text = (post?.title + " - " + user?.name),
-                text = post.title,
+                text = (post.title + " - " + user.name),
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
             )
@@ -93,6 +107,8 @@ fun PostDetailScreen(
              */
         }
     }
+
+
 }
 
 @Preview(showBackground = true)

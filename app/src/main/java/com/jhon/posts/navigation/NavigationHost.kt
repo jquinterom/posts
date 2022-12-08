@@ -28,7 +28,6 @@ fun NavigationHost(
             UserScreen()
         }
         composable(
-            // route = Destinations.PostDetailScreen.route + "/{postId}",
             route = Destinations.PostDetailScreen.route + "/{postId}",
             arguments = listOf(navArgument("postId") { type = NavType.IntType })
         ) { backStackEntry ->

@@ -5,6 +5,7 @@ import com.jhon.posts.api.dto.UserDTO
 import com.jhon.posts.constants.GET_ALL_POSTS_URL
 import com.jhon.posts.constants.GET_ALL_USERS_URL
 import com.jhon.posts.constants.GET_POST_BY_ID_URL
+import com.jhon.posts.constants.GET_USER_BY_ID_URL
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -19,4 +20,7 @@ interface ApiService {
 
     @GET(GET_POST_BY_ID_URL)
     suspend fun getPostById(@Path("postId") postId: Int): PostDTO
+
+    @GET(GET_USER_BY_ID_URL)
+    suspend fun getUserById(@Path("userId") userId: Int): UserDTO
 }

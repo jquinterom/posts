@@ -67,14 +67,12 @@ class PostRepository @Inject constructor(
     override suspend fun getPostById(postId: Int): ApiResponseStatus<Post> {
         return withContext(dispatcher) {
             val postResponseDeferred = async { downloadPost(postId) }
-            val postResponse = postResponseDeferred.await()
 
-            when{
-                postResponse is ApiResponseStatus.Error -> {
+            when (val postResponse = postResponseDeferred.await()) {
+                is ApiResponseStatus.Error -> {
                     postResponse
                 }
-
-                postResponse is ApiResponseStatus.Success -> {
+                is ApiResponseStatus.Success -> {
                     ApiResponseStatus.Success(
                         getPost(
                             postResponse.data
@@ -90,13 +88,32 @@ class PostRepository @Inject constructor(
 
 
     private fun getPost(post: Post) = post
+    private fun getUser(user: User) = user
 
     override suspend fun getCommentByPostId(): ApiResponseStatus<Comment> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getUserByPostId(): ApiResponseStatus<User> {
-        TODO("Not yet implemented")
+    override suspend fun getUserById(userId: Int): ApiResponseStatus<User> {
+        return withContext(dispatcher) {
+            val userResponseDeferred = async { downloadUser(userId) }
+
+            when (val userResponse = userResponseDeferred.await()) {
+                is ApiResponseStatus.Error -> {
+                    userResponse
+                }
+                is ApiResponseStatus.Success -> {
+                    ApiResponseStatus.Success(
+                        getUser(
+                            userResponse.data
+                        )
+                    )
+                }
+                else -> {
+                    ApiResponseStatus.Error(R.string.there_was_an_error_users)
+                }
+            }
+        }
     }
 
     private fun getCollectionPostsList(allPostsList: List<Post>) =
@@ -124,6 +141,13 @@ class PostRepository @Inject constructor(
             val post = apiService.getPostById(postId)
             val postDTOMapper = PostDTOMapper()
             postDTOMapper.formPostDTOToPostDomain(postDTO = post)
+        }
+
+    private suspend fun downloadUser(userId: Int): ApiResponseStatus<User> =
+        makeNetworkCall {
+            val user = apiService.getUserById(userId = userId)
+            val userDTOMapper = UserDTOMapper()
+            userDTOMapper.formUserDTOToUserDomain(user)
         }
 
 
