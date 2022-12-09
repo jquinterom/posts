@@ -1,25 +1,34 @@
 package com.jhon.posts.ui.screens
 
+import android.content.res.Resources.Theme
+import android.util.Log
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.rounded.Person
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jhon.posts.R
 import com.jhon.posts.api.ApiResponseStatus
 import com.jhon.posts.constants.FAKE_POST
-import com.jhon.posts.model.Post
+import com.jhon.posts.constants.FAKE_USER
 import com.jhon.posts.model.User
 import com.jhon.posts.ui.composables.ErrorDialog
 import com.jhon.posts.ui.composables.LoadingWheel
@@ -32,49 +41,45 @@ fun PostDetailScreen(
     postId: Int,
     viewModel: PostDetailViewModel = hiltViewModel(),
 ) {
-    val status = viewModel.status.value
-    val post: Post = viewModel.post.value
-    val user: User = viewModel.user.value
-
-    viewModel.setPostId(postId)
-    viewModel.getPostDetail()
-
+    //val user: User = viewModel.user.value
     val gradientColors = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
 
+    viewModel.getPostDetail(postId, 1)
+    val post by remember { viewModel.post }
+    val status by remember { viewModel.status }
 
+    Log.d("post", post.body)
+
+    /*
     if (status is ApiResponseStatus.Loading) {
         LoadingWheel()
     } else if (status is ApiResponseStatus.Error) {
         ErrorDialog(
-            messageId = status.messageId,
+            messageId = (status as ApiResponseStatus.Error<Any>).messageId,
             onErrorDialogDismiss = { viewModel.resetApiResponseStatus() })
     }
-
+    */
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(all = dimensionResource(id = R.dimen.margin_all_card)),
-        ) {
+    ) {
         Row(
             modifier = Modifier.align(alignment = Alignment.Start),
         ) {
             Text(
-                text = (post.title + " - " + user.name),
+                text = (post.title),
+                //text = FAKE_POST.title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
             )
-            Text(
-                // text = user?.name ?: FAKE_USER.name,
-                text = "Name",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-            )
+
         }
 
         Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.size_normal_spacer)))
 
+
         Text(
-            modifier = Modifier.align(alignment = Alignment.Start),
             text = post.body,
             //text = FAKE_POST.body,
             style = TextStyle(
@@ -83,6 +88,23 @@ fun PostDetailScreen(
                 )
             )
         )
+        Row(modifier = Modifier.align(alignment = Alignment.End)) {
+
+            Icon(
+                modifier = Modifier.size(ButtonDefaults.IconSize),
+                imageVector = Icons.Default.Person,
+                contentDescription = null
+            )
+
+            Text(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                //text = user?.name ?: FAKE_USER.name,
+                text = FAKE_USER.name,
+                fontWeight = FontWeight.Bold,
+                fontStyle = FontStyle.Italic,
+                fontSize = 10.sp,
+            )
+        }
 
         Column(
             modifier = Modifier

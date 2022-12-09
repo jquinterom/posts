@@ -27,22 +27,11 @@ class PostDetailViewModel @Inject constructor(
     var status = mutableStateOf<ApiResponseStatus<Any>?>(null)
         private set
 
-    private val _postId = MutableLiveData<Int>().apply {
-        value = 0
-    }
-    val postId: MutableLiveData<Int> = _postId
-
-    private val _userId = MutableLiveData<Int>().apply {
-        value = 0
-    }
-    val userId: MutableLiveData<Int> = _userId
-
-
-    fun getPostDetail() {
+    fun getPostDetail(postId: Int, userId: Int) {
         viewModelScope.launch {
             status.value = ApiResponseStatus.Loading()
-            handleResponseStatusPost(postRepository.getPostById(_postId.value ?: 0))
-            handleResponseStatusUser(postRepository.getUserById(_userId.value ?: 0))
+            handleResponseStatusPost(postRepository.getPostById(postId))
+            handleResponseStatusUser(postRepository.getUserById(userId = userId))
         }
     }
 
@@ -63,15 +52,6 @@ class PostDetailViewModel @Inject constructor(
         }
 
         status.value = apiResponseStatus as ApiResponseStatus<Any>
-    }
-
-
-    fun setPostId(postId: Int) {
-        _postId.value = postId
-    }
-
-    fun setUserId(userId: Int) {
-        _userId.value = userId
     }
 
     fun resetApiResponseStatus() {
