@@ -41,24 +41,12 @@ fun PostDetailScreen(
     postId: Int,
     viewModel: PostDetailViewModel = hiltViewModel(),
 ) {
-    //val user: User = viewModel.user.value
     val gradientColors = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
 
-    viewModel.getPostDetail(postId, 1)
-    val post by remember { viewModel.post }
-    val status by remember { viewModel.status }
+    viewModel.getPostDetail(postId)
+    val post = viewModel.post
+    val user: User = viewModel.user.value
 
-    Log.d("post", post.body)
-
-    /*
-    if (status is ApiResponseStatus.Loading) {
-        LoadingWheel()
-    } else if (status is ApiResponseStatus.Error) {
-        ErrorDialog(
-            messageId = (status as ApiResponseStatus.Error<Any>).messageId,
-            onErrorDialogDismiss = { viewModel.resetApiResponseStatus() })
-    }
-    */
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -68,7 +56,7 @@ fun PostDetailScreen(
             modifier = Modifier.align(alignment = Alignment.Start),
         ) {
             Text(
-                text = (post.title),
+                text = (post.value.title),
                 //text = FAKE_POST.title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
@@ -80,7 +68,7 @@ fun PostDetailScreen(
 
 
         Text(
-            text = post.body,
+            text = post.value.body,
             //text = FAKE_POST.body,
             style = TextStyle(
                 brush = Brush.linearGradient(

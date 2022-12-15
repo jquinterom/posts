@@ -24,14 +24,10 @@ class PostDetailViewModel @Inject constructor(
     var user = mutableStateOf(FAKE_USER)
         private set
 
-    var status = mutableStateOf<ApiResponseStatus<Any>?>(null)
-        private set
-
-    fun getPostDetail(postId: Int, userId: Int) {
+    fun getPostDetail(postId: Int) {
         viewModelScope.launch {
-            status.value = ApiResponseStatus.Loading()
             handleResponseStatusPost(postRepository.getPostById(postId))
-            handleResponseStatusUser(postRepository.getUserById(userId = userId))
+            handleResponseStatusUser(postRepository.getUserById(userId = post.value.userId))
         }
     }
 
@@ -41,22 +37,15 @@ class PostDetailViewModel @Inject constructor(
             post.value = apiResponseStatus.data
         }
 
-        status.value = apiResponseStatus as ApiResponseStatus<Any>
     }
-
 
     @Suppress("UNCHECKED_CAST")
     private fun handleResponseStatusUser(apiResponseStatus: ApiResponseStatus<User>) {
         if (apiResponseStatus is ApiResponseStatus.Success) {
             user.value = apiResponseStatus.data
         }
-
-        status.value = apiResponseStatus as ApiResponseStatus<Any>
     }
 
-    fun resetApiResponseStatus() {
-        status.value = null
-    }
 }
 
 
