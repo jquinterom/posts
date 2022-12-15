@@ -3,6 +3,9 @@ package com.jhon.posts.ui.screens
 import android.content.res.Resources.Theme
 import android.util.Log
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -17,8 +20,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,10 +31,13 @@ import com.jhon.posts.R
 import com.jhon.posts.api.ApiResponseStatus
 import com.jhon.posts.constants.FAKE_POST
 import com.jhon.posts.constants.FAKE_USER
+import com.jhon.posts.model.Comment
 import com.jhon.posts.model.User
+import com.jhon.posts.ui.composables.CommentCard
 import com.jhon.posts.ui.composables.ErrorDialog
 import com.jhon.posts.ui.composables.LoadingWheel
 import com.jhon.posts.viewmodel.PostDetailViewModel
+import java.util.*
 
 
 @OptIn(ExperimentalTextApi::class)
@@ -46,6 +51,7 @@ fun PostDetailScreen(
     viewModel.getPostDetail(postId)
     val post = viewModel.post
     val user: User = viewModel.user.value
+    val comments: MutableState<List<Comment>> = viewModel.listComments
 
     Column(
         modifier = Modifier
@@ -56,19 +62,17 @@ fun PostDetailScreen(
             modifier = Modifier.align(alignment = Alignment.Start),
         ) {
             Text(
-                text = (post.value.title),
+                text = (post.value.title.uppercase()),
                 //text = FAKE_POST.title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
             )
-
         }
 
         Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.size_normal_spacer)))
 
-
         Text(
-            text = post.value.body,
+            text = post.value.body.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
             //text = FAKE_POST.body,
             style = TextStyle(
                 brush = Brush.linearGradient(
@@ -86,8 +90,8 @@ fun PostDetailScreen(
 
             Text(
                 modifier = Modifier.align(Alignment.CenterVertically),
-                //text = user?.name ?: FAKE_USER.name,
-                text = FAKE_USER.name,
+                text = user.name,
+                //text = FAKE_USER.name,
                 fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
                 fontSize = 10.sp,
@@ -100,21 +104,27 @@ fun PostDetailScreen(
                 .fillMaxWidth()
                 .padding(top = dimensionResource(id = R.dimen.normal_margin))
         ) {
-            Text(
+            ClickableText(
                 modifier = Modifier
                     .align(alignment = Alignment.Start),
-                text = stringResource(R.string.comments),
-                fontWeight = FontWeight.Bold,
-                fontSize = 15.sp,
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                text = AnnotatedString(stringResource(R.string.comments)),
+                onClick = {
+                    viewModel.getComments(postId = postId)
+                },
             )
 
-            /*
-            LazyColumn {
-                items(comments ?: emptyList()) { comment ->
-                    CommentCard(comment = comment)
+            if (comments.value.isNotEmpty()) {
+                LazyColumn {
+                    items(comments.value) { comment ->
+                        CommentCard(comment = comment)
+                    }
                 }
             }
-             */
         }
     }
 

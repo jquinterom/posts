@@ -1,5 +1,6 @@
 package com.jhon.posts.viewmodel
 
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.jhon.posts.api.ApiResponseStatus
 import com.jhon.posts.api.repository.PostRepository
 import com.jhon.posts.constants.FAKE_POST
 import com.jhon.posts.constants.FAKE_USER
+import com.jhon.posts.model.Comment
 import com.jhon.posts.model.Post
 import com.jhon.posts.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,10 +26,25 @@ class PostDetailViewModel @Inject constructor(
     var user = mutableStateOf(FAKE_USER)
         private set
 
+    var listComments = mutableStateOf<List<Comment>>(emptyList())
+        private set
+
     fun getPostDetail(postId: Int) {
         viewModelScope.launch {
             handleResponseStatusPost(postRepository.getPostById(postId))
             handleResponseStatusUser(postRepository.getUserById(userId = post.value.userId))
+        }
+    }
+
+    fun getComments(postId: Int){
+        viewModelScope.launch { 
+            handleResponseStatusComments(postRepository.getCommentsByPostId(postId))
+        }
+    }
+
+    private fun handleResponseStatusComments(apiResponseStatus: ApiResponseStatus<List<Comment>>) {
+        if(apiResponseStatus is ApiResponseStatus.Success){
+            listComments.value = apiResponseStatus.data
         }
     }
 
@@ -36,7 +53,6 @@ class PostDetailViewModel @Inject constructor(
         if (apiResponseStatus is ApiResponseStatus.Success) {
             post.value = apiResponseStatus.data
         }
-
     }
 
     @Suppress("UNCHECKED_CAST")

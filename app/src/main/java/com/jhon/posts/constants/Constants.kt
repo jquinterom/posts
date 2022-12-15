@@ -11,6 +11,7 @@ const val GET_ALL_COMMENTS_URL = "comment"
 const val GET_ALL_USERS_URL = "users"
 const val GET_POST_BY_ID_URL = "$GET_ALL_POSTS_URL/{postId}"
 const val GET_USER_BY_ID_URL = "$GET_ALL_USERS_URL/{userId}"
+const val GET_ALL_COMMENTS_BY_POST_ID_URL = "$GET_ALL_POSTS_URL/{postId}/comments"
 
 
 // Fake User
