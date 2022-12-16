@@ -16,7 +16,7 @@ const val GET_ALL_COMMENTS_BY_POST_ID_URL = "$GET_ALL_POSTS_URL/{postId}/comment
 
 // Fake User
 val FAKE_POST = Post(0, 1, "Fake post", "Content for fake post from constants")
-val FAKE_USER = User(0, "Fake User", "fakeuser1", "unknown@unknown.com")
+val FAKE_USER = User(0, "Fake User", "fakeuser1", "unknown@unknown.com", "123", "www.website.com")
 val FAKE_COMMENTS = listOf<Comment>(
     Comment(1, 1, "Comment 1", "comment@comment.com", LoremIpsum(10).values.first()),
     Comment(1, 2, "Comment 2", "comment1@comment.com", LoremIpsum(10).values.first()),

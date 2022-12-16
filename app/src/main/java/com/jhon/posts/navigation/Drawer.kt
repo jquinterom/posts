@@ -34,11 +34,13 @@ fun Drawer(
 ) {
     Column {
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
+            painter = painterResource(id = R.drawable.ic_banner_foreground),
             contentDescription = null,
             modifier = Modifier
                 .height(160.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .fillMaxSize()
+                .background(color = MaterialTheme.colors.primary),
             contentScale = ContentScale.FillWidth
         )
 

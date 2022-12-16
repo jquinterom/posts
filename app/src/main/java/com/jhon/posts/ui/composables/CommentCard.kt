@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.jhon.posts.R
 import com.jhon.posts.constants.FAKE_COMMENTS
 import com.jhon.posts.model.Comment
+import java.util.*
 
 
 @OptIn(ExperimentalTextApi::class, ExperimentalMaterialApi::class)
@@ -53,7 +55,7 @@ fun CommentCard(
         ) {
             Text(
                 modifier = Modifier.align(alignment = Alignment.Start),
-                text = comment.body,
+                text = comment.body.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
                 style = TextStyle(
                     brush = Brush.linearGradient(
                         colors = gradientColors

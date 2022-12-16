@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.jhon.posts.ui.screens.PostDetailScreen
 import com.jhon.posts.ui.screens.PostListScreen
-import com.jhon.posts.ui.screens.UserScreen
+import com.jhon.posts.ui.screens.UserListScreen
 
 @Composable
 fun NavigationHost(
@@ -25,7 +25,7 @@ fun NavigationHost(
             )
         }
         composable(route = Destinations.UserScreen.route) {
-            UserScreen()
+            UserListScreen()
         }
         composable(
             route = Destinations.PostDetailScreen.route + "/{postId}",

@@ -10,6 +10,8 @@ class UserDTOMapper {
             userDTO.name,
             userDTO.username,
             userDTO.email,
+            userDTO.phone,
+            userDTO.website
         )
     }
 

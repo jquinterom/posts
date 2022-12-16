@@ -23,6 +23,8 @@ import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.jhon.posts.R
+import com.jhon.posts.constants.FAKE_POST
+import com.jhon.posts.constants.FAKE_USER
 import com.jhon.posts.model.Post
 import com.jhon.posts.model.User
 import java.util.*
@@ -83,7 +85,7 @@ fun PostCard(
 @Composable
 fun PostCardPreview() {
     PostCard(
-        post = Post(1, 1, "Title card", "Body"),
-        user = User(1, "Jhon", "jhon1", "j@j.com"), {}
-    )
+        FAKE_POST,
+        FAKE_USER
+    ) {}
 }
