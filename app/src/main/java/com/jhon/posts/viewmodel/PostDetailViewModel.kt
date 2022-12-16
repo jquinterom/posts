@@ -1,8 +1,6 @@
 package com.jhon.posts.viewmodel
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jhon.posts.api.ApiResponseStatus
@@ -29,6 +27,13 @@ class PostDetailViewModel @Inject constructor(
     var listComments = mutableStateOf<List<Comment>>(emptyList())
         private set
 
+    private var comments = mutableStateOf<List<Comment>>(emptyList())
+
+    private var statusComments = mutableStateOf(false)
+
+    var showedComment = mutableStateOf(false)
+        private set
+
     fun getPostDetail(postId: Int) {
         viewModelScope.launch {
             handleResponseStatusPost(postRepository.getPostById(postId))
@@ -36,15 +41,29 @@ class PostDetailViewModel @Inject constructor(
         }
     }
 
-    fun getComments(postId: Int){
-        viewModelScope.launch { 
-            handleResponseStatusComments(postRepository.getCommentsByPostId(postId))
+    fun getComments(postId: Int) {
+        viewModelScope.launch {
+            if (!statusComments.value) {
+                if (listComments.value.isEmpty()) {
+                    handleResponseStatusComments(postRepository.getCommentsByPostId(postId))
+                }
+            } else {
+                listComments.value = emptyList()
+                statusComments.value = !statusComments.value
+            }
         }
+
+        showedComment.value = !showedComment.value
     }
 
     private fun handleResponseStatusComments(apiResponseStatus: ApiResponseStatus<List<Comment>>) {
-        if(apiResponseStatus is ApiResponseStatus.Success){
+        if (apiResponseStatus is ApiResponseStatus.Success) {
             listComments.value = apiResponseStatus.data
+            statusComments.value = true
+            comments.value = listComments.value
+        } else {
+            statusComments.value = false
+            comments.value = emptyList()
         }
     }
 
