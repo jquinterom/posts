@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -74,7 +75,8 @@ fun DrawerItem(
             .height(56.dp)
             .padding(6.dp)
             .clip(RoundedCornerShape(15))
-            .background(if (selected) Color.Blue.copy(alpha = 0.25f) else Color.Transparent)
+            //.background(if (selected) Color.Blue.copy(alpha = 0.25f) else Color.Transparent)
+            .background(if (selected)  MaterialTheme.colors.surface.copy(alpha = 0.25f) else Color.Transparent)
             .padding(8.dp)
             .clickable { onItemClick(item) },
         verticalAlignment = Alignment.CenterVertically
@@ -83,12 +85,12 @@ fun DrawerItem(
             modifier = Modifier.size(32.dp),
             imageVector = item.icon,
             contentDescription = item.title,
-            tint = if (selected) Color.Blue else Color.Gray
+            tint = if (selected) MaterialTheme.colors.secondary else MaterialTheme.colors.primary
         )
         Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.size_normal_spacer)))
         Text(
             text = item.title, style = TextStyle(fontSize = 18.sp),
-            color = if (selected) Color.Blue else Color.Black
+            color = if (selected) MaterialTheme.colors.secondary else MaterialTheme.colors.primary
         )
     }
 }

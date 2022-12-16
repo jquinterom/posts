@@ -1,5 +1,6 @@
 package com.jhon.posts.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,10 +26,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jhon.posts.R
+import com.jhon.posts.api.ApiResponseStatus
 import com.jhon.posts.constants.FAKE_POST
 import com.jhon.posts.model.Comment
 import com.jhon.posts.model.User
 import com.jhon.posts.ui.composables.CommentCard
+import com.jhon.posts.ui.composables.ErrorDialog
+import com.jhon.posts.ui.composables.LoadingWheel
 import com.jhon.posts.viewmodel.PostDetailViewModel
 import java.util.*
 
@@ -45,6 +49,7 @@ fun PostDetailScreen(
     val post = viewModel.post
     val user: User = viewModel.user.value
     val comments: MutableState<List<Comment>> = viewModel.listComments
+    val statusLoadComments = viewModel.statusLoadComments.value
 
     Column(
         modifier = Modifier
@@ -128,6 +133,14 @@ fun PostDetailScreen(
                         CommentCard(comment = comment)
                     }
                 }
+            }
+
+            if (statusLoadComments is ApiResponseStatus.Loading) {
+                LoadingWheel()
+            } else if (statusLoadComments is ApiResponseStatus.Error) {
+                ErrorDialog(
+                    messageId = statusLoadComments.messageId,
+                    onErrorDialogDismiss = { viewModel.resetApiResponseStatus() })
             }
         }
     }

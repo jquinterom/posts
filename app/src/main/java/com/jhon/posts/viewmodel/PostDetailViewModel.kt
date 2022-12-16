@@ -34,6 +34,9 @@ class PostDetailViewModel @Inject constructor(
     var showedComment = mutableStateOf(false)
         private set
 
+    var statusLoadComments = mutableStateOf<ApiResponseStatus<Any>?>(null)
+        private set
+
     fun getPostDetail(postId: Int) {
         viewModelScope.launch {
             handleResponseStatusPost(postRepository.getPostById(postId))
@@ -45,6 +48,7 @@ class PostDetailViewModel @Inject constructor(
         viewModelScope.launch {
             if (!statusComments.value) {
                 if (listComments.value.isEmpty()) {
+                    statusLoadComments.value = ApiResponseStatus.Loading()
                     handleResponseStatusComments(postRepository.getCommentsByPostId(postId))
                 }
             } else {
@@ -56,6 +60,7 @@ class PostDetailViewModel @Inject constructor(
         showedComment.value = !showedComment.value
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun handleResponseStatusComments(apiResponseStatus: ApiResponseStatus<List<Comment>>) {
         if (apiResponseStatus is ApiResponseStatus.Success) {
             listComments.value = apiResponseStatus.data
@@ -65,6 +70,8 @@ class PostDetailViewModel @Inject constructor(
             statusComments.value = false
             comments.value = emptyList()
         }
+
+        statusLoadComments.value = apiResponseStatus as ApiResponseStatus<Any>
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -79,6 +86,10 @@ class PostDetailViewModel @Inject constructor(
         if (apiResponseStatus is ApiResponseStatus.Success) {
             user.value = apiResponseStatus.data
         }
+    }
+
+    fun resetApiResponseStatus() {
+        statusLoadComments.value = null
     }
 
 }
