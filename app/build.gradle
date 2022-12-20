@@ -106,4 +106,11 @@ dependencies {
     // ConstraintLayout
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
+    // Moshi
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+
+    // Coil - Images
+    implementation 'io.coil-kt:coil:2.1.0'
+    implementation 'io.coil-kt:coil-compose:2.1.0'
+
 }
