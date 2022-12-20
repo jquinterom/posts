@@ -38,7 +38,7 @@ fun MainScreen() {
 
     val navigationItems = listOf(
         Destinations.PostsListScreen,
-        Destinations.UserScreen,
+        Destinations.UsersListScreen,
     )
 
     Scaffold(

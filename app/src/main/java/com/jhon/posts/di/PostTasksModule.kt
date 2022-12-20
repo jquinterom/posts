@@ -1,6 +1,8 @@
 package com.jhon.posts.di
 
+import com.jhon.posts.api.repository.AlbumRepository
 import com.jhon.posts.api.repository.PostRepository
+import com.jhon.posts.interfaces.AlbumTask
 import com.jhon.posts.interfaces.PostTasks
 import dagger.Binds
 import dagger.Module
@@ -12,6 +14,11 @@ import dagger.hilt.components.SingletonComponent
 abstract class PostTasksModule {
     @Binds
     abstract fun bindPostTasks(
-        postRepository: PostRepository
+        postRepository: PostRepository,
     ): PostTasks
+
+    @Binds
+    abstract fun bindAlbumTasks(
+        albumRepository: AlbumRepository,
+    ): AlbumTask
 }

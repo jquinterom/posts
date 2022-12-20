@@ -1,8 +1,6 @@
 package com.jhon.posts.api
 
-import com.jhon.posts.api.dto.CommentDTO
-import com.jhon.posts.api.dto.PostDTO
-import com.jhon.posts.api.dto.UserDTO
+import com.jhon.posts.api.dto.*
 import com.jhon.posts.constants.*
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -23,5 +21,11 @@ interface ApiService {
     suspend fun getUserById(@Path("userId") userId: Int): UserDTO
 
     @GET(GET_ALL_COMMENTS_BY_POST_ID_URL)
-    suspend fun getCommentsByPostId(@Path("postId") postId: Int) : List<CommentDTO>
+    suspend fun getCommentsByPostId(@Path("postId") postId: Int): List<CommentDTO>
+
+    @GET(GET_ALL_ALBUMS_BY_USER_ID_URL)
+    suspend fun getAlbumsByUserId(@Path("userId") userId: Int): List<AlbumDTO>
+
+    @GET(GET_ALL_PHOTOS_BY_ALBUM_ID_URL)
+    suspend fun getPhotosByAlbumId(@Path("albumId") albumId: Int): List<PhotoDTO>
 }

@@ -18,6 +18,7 @@ import com.jhon.posts.viewmodel.PostListViewModel
 @Composable
 fun UserListScreen(
     viewModel: PostListViewModel = hiltViewModel(),
+    onNavigateToAlbums: (userId: Int) -> Unit,
 ) {
 
     val status = viewModel.status.value
@@ -26,7 +27,10 @@ fun UserListScreen(
     Surface {
         LazyColumn {
             items(usersList) { user ->
-                UserCard(user = user)
+                UserCard(
+                    user = user,
+                    onNavigateToAlbums = { onNavigateToAlbums(user.id) },
+                )
             }
         }
     }
@@ -44,5 +48,5 @@ fun UserListScreen(
 @Preview(showBackground = true)
 @Composable
 fun ProfilePreview() {
-    UserListScreen()
+    UserListScreen() {}
 }

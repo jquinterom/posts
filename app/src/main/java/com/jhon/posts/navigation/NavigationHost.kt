@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.jhon.posts.ui.screens.AlbumListScreen
 import com.jhon.posts.ui.screens.PostDetailScreen
 import com.jhon.posts.ui.screens.PostListScreen
 import com.jhon.posts.ui.screens.UserListScreen
@@ -24,8 +25,10 @@ fun NavigationHost(
                 onNavigateToPostDetail = { posId: Int -> navController.navigate(Destinations.PostDetailScreen.route + "/${posId}") },
             )
         }
-        composable(route = Destinations.UserScreen.route) {
-            UserListScreen()
+        composable(route = Destinations.UsersListScreen.route) {
+            UserListScreen(
+                onNavigateToAlbums = { userId: Int -> navController.navigate(Destinations.AlbumsListScreen.route + "/${userId}") },
+            )
         }
         composable(
             route = Destinations.PostDetailScreen.route + "/{postId}",
@@ -33,6 +36,16 @@ fun NavigationHost(
         ) { backStackEntry ->
             PostDetailScreen(
                 postId = backStackEntry.arguments?.getInt("postId") ?: 0
+            )
+        }
+        composable(
+            route = Destinations.AlbumsListScreen.route + "/{userId}",
+            arguments = listOf(navArgument("userId") {
+                type = NavType.IntType
+            })
+        ) { navBackStackEntry ->
+            AlbumListScreen(
+                userId = navBackStackEntry.arguments?.getInt("userId") ?: 0
             )
         }
     }

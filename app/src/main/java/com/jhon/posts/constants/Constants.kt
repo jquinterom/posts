@@ -7,11 +7,15 @@ import com.jhon.posts.model.User
 
 const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 const val GET_ALL_POSTS_URL = "posts"
-const val GET_ALL_COMMENTS_URL = "comment"
+const val GET_ALL_COMMENTS_URL = "comments"
 const val GET_ALL_USERS_URL = "users"
+const val GET_ALL_ALBUMS_URL = "albums"
+const val GET_ALL_PHOTOS_URL = "photos"
 const val GET_POST_BY_ID_URL = "$GET_ALL_POSTS_URL/{postId}"
 const val GET_USER_BY_ID_URL = "$GET_ALL_USERS_URL/{userId}"
-const val GET_ALL_COMMENTS_BY_POST_ID_URL = "$GET_ALL_POSTS_URL/{postId}/comments"
+const val GET_ALL_COMMENTS_BY_POST_ID_URL = "$GET_ALL_POSTS_URL/{postId}/$GET_ALL_COMMENTS_URL"
+const val GET_ALL_ALBUMS_BY_USER_ID_URL = "$GET_ALL_USERS_URL/{userId}/$GET_ALL_ALBUMS_URL"
+const val GET_ALL_PHOTOS_BY_ALBUM_ID_URL = "$GET_ALL_ALBUMS_URL/{albumId}/$GET_ALL_PHOTOS_URL"
 
 
 // Fake User

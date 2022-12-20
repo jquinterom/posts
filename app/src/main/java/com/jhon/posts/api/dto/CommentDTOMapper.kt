@@ -4,7 +4,7 @@ import com.jhon.posts.model.Comment
 
 class CommentDTOMapper {
 
-    private fun formCommentDTOToCommentDomain(commentDTO: CommentDTO): Comment {
+    private fun fromCommentDTOToCommentDomain(commentDTO: CommentDTO): Comment {
         return Comment(
             commentDTO.postId,
             commentDTO.id,
@@ -16,7 +16,7 @@ class CommentDTOMapper {
 
     fun fromCommentDTOListToCommentDomainList(commentDTOList: List<CommentDTO>): List<Comment> {
         return commentDTOList.map {
-            formCommentDTOToCommentDomain(it)
+            fromCommentDTOToCommentDomain(it)
         }
     }
 }

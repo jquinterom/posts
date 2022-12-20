@@ -1,7 +1,6 @@
 package com.jhon.posts.ui.composables
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
@@ -26,7 +25,10 @@ import com.jhon.posts.constants.FAKE_USER
 import com.jhon.posts.model.User
 
 @Composable
-fun UserCard(user: User) {
+fun UserCard(
+    user: User,
+    onNavigateToAlbums : (userId: Int) -> Unit,
+) {
     Card(
         modifier = Modifier
             .padding(
@@ -101,7 +103,7 @@ fun UserCard(user: User) {
                     fontStyle = FontStyle.Italic
                 ),
                 onClick = {
-                    Log.d("click", "click")
+                    onNavigateToAlbums(user.id)
                 }
             )
         }
@@ -112,6 +114,6 @@ fun UserCard(user: User) {
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun PreviewUserCard() {
     MaterialTheme {
-        UserCard(user = FAKE_USER)
+        UserCard(user = FAKE_USER){}
     }
 }
