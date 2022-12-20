@@ -2,6 +2,7 @@ package com.jhon.posts.constants
 
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import com.jhon.posts.model.Comment
+import com.jhon.posts.model.Photo
 import com.jhon.posts.model.Post
 import com.jhon.posts.model.User
 
@@ -25,5 +26,12 @@ val FAKE_COMMENTS = listOf<Comment>(
     Comment(1, 1, "Comment 1", "comment@comment.com", LoremIpsum(10).values.first()),
     Comment(1, 2, "Comment 2", "comment1@comment.com", LoremIpsum(10).values.first()),
     Comment(1, 3, "Comment 2", "comment2@comment.com", LoremIpsum(10).values.first()),
+)
+val FAKE_PHOTO = Photo(
+    albumId = 1,
+    id = 1,
+    title = "Fake title photo",
+    url = "https://via.placeholder.com/600/92c952",
+    thumbnailUrl = "https://via.placeholder.com/150/92c952"
 )
 

@@ -21,4 +21,7 @@ sealed class Destinations(
     object AlbumsListScreen : Destinations(
         route = "albums/", title = "Albums", icon = Icons.Filled.Share
     )
+    object PhotosAlbumListScreen : Destinations(
+        route = "photos/", title = "Photos", icon = Icons.Filled.Face
+    )
 }
