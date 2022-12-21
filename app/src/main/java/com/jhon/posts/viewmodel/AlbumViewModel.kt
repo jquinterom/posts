@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.jhon.posts.api.ApiResponseStatus
 import com.jhon.posts.interfaces.AlbumTask
 import com.jhon.posts.model.Album
+import com.jhon.posts.model.Photo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,10 +15,13 @@ import javax.inject.Inject
 class AlbumViewModel @Inject constructor(
     private val albumRepository: AlbumTask,
 ) : ViewModel() {
+    var status = mutableStateOf<ApiResponseStatus<Any>?>(null)
+        private set
+
     var albumsList = mutableStateOf<List<Album>>(listOf())
         private set
 
-    var status = mutableStateOf<ApiResponseStatus<Any>?>(null)
+    var photosList = mutableStateOf<List<Photo>>(listOf())
         private set
 
 
@@ -26,6 +30,21 @@ class AlbumViewModel @Inject constructor(
             status.value = ApiResponseStatus.Loading()
             handleResponseStatusAlbums(albumRepository.getAlbumsCollectionByUserId(userId = userId))
         }
+    }
+
+    fun getPhotosByAlbumId(albumId: Int){
+        viewModelScope.launch {
+            status.value = ApiResponseStatus.Loading()
+            handleResponseStatusPhotos(albumRepository.getPhotosCollectionByAlbumId(albumId = albumId))
+        }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private fun handleResponseStatusPhotos(photosCollectionByAlbumId: ApiResponseStatus<List<Photo>>) {
+        if(photosCollectionByAlbumId is ApiResponseStatus.Success){
+            photosList.value = photosCollectionByAlbumId.data
+        }
+        status.value = photosCollectionByAlbumId as ApiResponseStatus<Any>
     }
 
     @Suppress("UNCHECKED_CAST")

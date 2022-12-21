@@ -31,7 +31,7 @@ val FAKE_PHOTO = Photo(
     albumId = 1,
     id = 1,
     title = "Fake title photo",
-    url = "https://via.placeholder.com/600/92c952",
-    thumbnailUrl = "https://via.placeholder.com/150/92c952"
+    url = "https://via.placeholder.com/600/66b7d2",
+    thumbnailUrl = "https://via.placeholder.com/150/66b7d2"
 )
 
