@@ -2,6 +2,7 @@
 <resources>
     <dimen name="margin_bottom_card">8dp</dimen>
     <dimen name="margin_bottom_top_bar">8dp</dimen>
+    <dimen name="margin_start_card">8dp</dimen>
     <dimen name="margin_all_card">4dp</dimen>
     <dimen name="margin_detail_container">8dp</dimen>
     <dimen name="normal_margin">8dp</dimen>

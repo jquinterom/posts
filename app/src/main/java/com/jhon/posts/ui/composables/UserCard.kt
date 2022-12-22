@@ -1,6 +1,7 @@
 package com.jhon.posts.ui.composables
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
@@ -27,7 +28,7 @@ import com.jhon.posts.model.User
 @Composable
 fun UserCard(
     user: User,
-    onNavigateToAlbums : (userId: Int) -> Unit,
+    onNavigateToAlbums: (userId: Int) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -50,7 +51,9 @@ fun UserCard(
             ) {
                 Icon(
                     modifier = Modifier.size(ButtonDefaults.IconSize),
-                    imageVector = Icons.Default.Person, contentDescription = null
+                    imageVector = Icons.Default.Person,
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.primary
                 )
                 Text(
                     modifier = Modifier.padding(start = dimensionResource(id = R.dimen.margin_all_card)),
@@ -62,7 +65,8 @@ fun UserCard(
             ) {
                 Icon(
                     modifier = Modifier.size(ButtonDefaults.IconSize),
-                    imageVector = Icons.Default.Email, contentDescription = null
+                    imageVector = Icons.Default.Email, contentDescription = null,
+                    tint = MaterialTheme.colors.primary
                 )
                 Text(
                     modifier = Modifier.padding(start = dimensionResource(id = R.dimen.margin_all_card)),
@@ -74,7 +78,8 @@ fun UserCard(
             ) {
                 Icon(
                     modifier = Modifier.size(ButtonDefaults.IconSize),
-                    imageVector = Icons.Default.Phone, contentDescription = null
+                    imageVector = Icons.Default.Phone, contentDescription = null,
+                    tint = MaterialTheme.colors.primary
                 )
                 Text(
                     modifier = Modifier.padding(start = dimensionResource(id = R.dimen.margin_all_card)),
@@ -86,7 +91,8 @@ fun UserCard(
             ) {
                 Icon(
                     modifier = Modifier.size(ButtonDefaults.IconSize),
-                    imageVector = Icons.Default.Info, contentDescription = null
+                    imageVector = Icons.Default.Info, contentDescription = null,
+                    tint = MaterialTheme.colors.primary
                 )
                 Text(
                     modifier = Modifier.padding(start = dimensionResource(id = R.dimen.margin_all_card)),
@@ -114,6 +120,6 @@ fun UserCard(
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun PreviewUserCard() {
     MaterialTheme {
-        UserCard(user = FAKE_USER){}
+        UserCard(user = FAKE_USER) {}
     }
 }
