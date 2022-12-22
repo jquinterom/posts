@@ -90,7 +90,7 @@ fun PhotoCard(
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
                     }, style = TextStyle(
-                    MaterialTheme.colors.primary, fontSize = 14.sp, fontWeight = FontWeight.Bold
+                    MaterialTheme.colors.secondaryVariant, fontSize = 14.sp, fontWeight = FontWeight.Bold
                 ), text = photo.title.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
             )
         }

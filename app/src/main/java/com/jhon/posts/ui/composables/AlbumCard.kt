@@ -1,9 +1,6 @@
 package com.jhon.posts.ui.composables
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
@@ -24,13 +21,12 @@ fun AlbumCard(
     album: Album,
     onNavigateToPhotosList: (albumId: Int) -> Unit,
 ) {
-
     Card(
         modifier = Modifier
             .padding(
-                start = dimensionResource(id = R.dimen.margin_all_card),
-                end = dimensionResource(id = R.dimen.margin_all_card)
+                all = dimensionResource(id = R.dimen.margin_all_card)
             )
+            .defaultMinSize(minHeight = dimensionResource(id = R.dimen.min_height_album_card))
             .shadow(
                 dimensionResource(id = R.dimen.shadow_card),
                 spotColor = MaterialTheme.colors.onPrimary

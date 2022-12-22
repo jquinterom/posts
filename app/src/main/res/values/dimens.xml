@@ -10,4 +10,5 @@
     <dimen name="size_normal_spacer">15dp</dimen>
     <dimen name="rounded_corner_shape">50dp</dimen>
     <dimen name="min_height_photo_card">50dp</dimen>
+    <dimen name="min_height_album_card">50dp</dimen>
 </resources>
