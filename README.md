@@ -4,7 +4,7 @@
 
 The data is from [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
 
-Testing App Jetpack Compose [Video](https://mega.nz/file/WkczjT7L#RVH3zpESZGZgZop06ZJA9R6v69PfSsKKINmHbltJ-jM)
+You can watch the video about unit and instrumental tests (Jetpack Compose) [Here](https://mega.nz/file/WkczjT7L#RVH3zpESZGZgZop06ZJA9R6v69PfSsKKINmHbltJ-jM).
 
 ### Posts
 ![post](https://user-images.githubusercontent.com/87286568/209218158-1084637b-ea35-43d1-8847-5a6febfe08d7.gif)
@@ -24,4 +24,4 @@ Testing App Jetpack Compose [Video](https://mega.nz/file/WkczjT7L#RVH3zpESZGZgZo
 - Retrofit
 - [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
 
-[<img src="https://cdn.freebiesupply.com/logos/large/2x/youtube-icon-logo-png-transparent.png" width="15" height="10"> ](https://www.youtube.com/@commondev)
+ [<img src="https://cdn.freebiesupply.com/logos/large/2x/youtube-icon-logo-png-transparent.png" width="20" height="15"> CommonDev](https://www.youtube.com/@commondev)
