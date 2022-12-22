@@ -5,13 +5,15 @@
 The data is from [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
 
 ### Posts
-![](https://s9.gifyu.com/images/post.gif)
+![post](https://user-images.githubusercontent.com/87286568/209218158-1084637b-ea35-43d1-8847-5a6febfe08d7.gif)
+
 
 ### Post Detail
-![](https://s9.gifyu.com/images/postDetail.gif)
+![postDetail](https://user-images.githubusercontent.com/87286568/209218315-5dae56e1-d285-4b63-afc9-ecf05302eaed.gif)
+
 
 ### Users - Albums - Photos
-![](https://s3.gifyu.com/images/users_albums_photos.gif)
+![user Albums photos](https://user-images.githubusercontent.com/87286568/209218337-582d40a4-e4a7-4595-993e-ddcb989ae56f.gif)
 
 
 ### Main Technologies
