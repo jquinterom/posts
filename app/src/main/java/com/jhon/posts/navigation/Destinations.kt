@@ -10,7 +10,7 @@ sealed class Destinations(
     val icon: ImageVector,
 ) {
     object PostsListScreen : Destinations(
-        route = "posts/{postId}", title = "Posts", icon = Icons.Filled.List,
+        route = "posts", title = "Posts", icon = Icons.Filled.List,
     )
     object UsersListScreen : Destinations(
         route = "users", title = "Users", icon = Icons.Filled.Person
@@ -19,9 +19,9 @@ sealed class Destinations(
         route = "postDetail", title = "Post Detail", icon = Icons.Filled.Favorite
     )
     object AlbumsListScreen : Destinations(
-        route = "albums/", title = "Albums", icon = Icons.Filled.Share
+        route = "albums", title = "Albums", icon = Icons.Filled.Share
     )
     object PhotosAlbumListScreen : Destinations(
-        route = "photos/", title = "Photos", icon = Icons.Filled.Face
+        route = "photos", title = "Photos", icon = Icons.Filled.Face
     )
 }

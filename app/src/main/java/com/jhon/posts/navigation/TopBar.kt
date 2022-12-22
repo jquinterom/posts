@@ -13,10 +13,11 @@ import com.jhon.posts.R
 @Composable
 fun TopBar(
     scope: CoroutineScope,
-    scaffoldState: ScaffoldState
+    scaffoldState: ScaffoldState,
+    title: String,
 ) {
     TopAppBar(
-        title = { Text(LocalContext.current.getString(R.string.app_name)) },
+        title = { Text(title) },
         navigationIcon = {
             IconButton(onClick = {
                 scope.launch {

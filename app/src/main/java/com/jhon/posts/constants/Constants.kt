@@ -35,3 +35,4 @@ val FAKE_PHOTO = Photo(
     thumbnailUrl = "https://via.placeholder.com/150/66b7d2"
 )
 
+const val DELIMITER_SPLIT = '/'
