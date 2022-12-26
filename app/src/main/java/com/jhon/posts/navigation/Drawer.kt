@@ -40,7 +40,7 @@ fun Drawer(
                 .height(160.dp)
                 .fillMaxWidth()
                 .fillMaxSize()
-                .background(color = MaterialTheme.colors.primary),
+                .background(color = MaterialTheme.colors.secondary),
             contentScale = ContentScale.FillWidth
         )
 
