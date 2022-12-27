@@ -1,15 +1,18 @@
 package com.jhon.posts.ui.composables
 
-import androidx.compose.foundation.layout.Column
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.dimensionResource
@@ -35,6 +38,7 @@ fun PostCard(
     onNavigateToPostDetail: (postId: Int) -> Unit,
 ) {
     val gradientColors = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
+    var currentPost by remember { mutableStateOf(post) }
 
     Card(
         modifier = Modifier
@@ -45,10 +49,11 @@ fun PostCard(
                 dimensionResource(id = R.dimen.shadow_card),
                 spotColor = MaterialTheme.colors.onPrimary
             ),
-        onClick = { onNavigateToPostDetail(post.id) }
+        onClick = {
+            onNavigateToPostDetail(post.id)
+        }
     )
     {
-
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
@@ -58,14 +63,17 @@ fun PostCard(
         ) {
             val (title, iconFavorite, author) = createRefs()
 
-
             Text(
                 modifier = Modifier
                     .constrainAs(title) {
                         top.linkTo(iconFavorite.bottom)
                         start.linkTo(parent.start)
                     },
-                text = post.title.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() },
+                text = post.title.replaceFirstChar {
+                    if (it.isLowerCase()) it.titlecase(
+                        Locale.getDefault()
+                    ) else it.toString()
+                },
                 style = TextStyle(
                     brush = Brush.linearGradient(
                         colors = gradientColors
@@ -76,13 +84,23 @@ fun PostCard(
 
             Icon(
                 modifier = Modifier
-                    .size(ButtonDefaults.IconSize)
-                    .padding(start = dimensionResource(id = R.dimen.margin_all_card))
                     .constrainAs(iconFavorite) {
                         top.linkTo(parent.top)
+                        bottom.linkTo(title.top)
                         end.linkTo(parent.end)
+                    }
+                    .clip(RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner_shape)))
+                    .size(ButtonDefaults.IconSize)
+                    .clickable {
+                        currentPost =
+                            Post(post.id, post.userId, post.title, post.body, !currentPost.favorite)
+                        Log.d("post", currentPost.toString())
                     },
-                imageVector = Icons.Default.Favorite,
+                imageVector = if (currentPost.favorite) {
+                    Icons.Default.Favorite
+                } else {
+                    Icons.Default.FavoriteBorder
+                },
                 contentDescription = null
             )
 
@@ -98,8 +116,6 @@ fun PostCard(
                 text = user.name,
             )
         }
-
-
     }
 }
 

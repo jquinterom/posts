@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jhon.posts.api.ApiResponseStatus
+import com.jhon.posts.constants.FAKE_POST
 import com.jhon.posts.interfaces.PostTasks
 import com.jhon.posts.model.Post
 import com.jhon.posts.model.User
@@ -66,5 +67,9 @@ class PostListViewModel @Inject constructor(
 
     fun resetApiResponseStatus() {
         status.value = null
+    }
+
+    fun updatePostFavorite(post: Post){
+        // TODO: register or update favorite post
     }
 }
