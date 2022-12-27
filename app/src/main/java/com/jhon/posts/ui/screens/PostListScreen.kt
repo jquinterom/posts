@@ -1,6 +1,7 @@
 package com.jhon.posts.ui.screens
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
@@ -30,6 +31,17 @@ fun PostListScreen(
         LazyColumn {
             items(postList) { post ->
                 var user = FAKE_USER
+
+                viewModel.registerPost(post = post)
+
+                viewModel.getPostByIdDB(postId = post.id)
+                val postDb = viewModel.postDb
+
+                if (postDb.value == null) {
+                    Log.d("post ${post.id}", "Not Found ")
+                } else {
+                    Log.d("post ${post.id}", "Found")
+                }
 
                 usersList.map { userItem ->
                     if (userItem.id == post.userId) {

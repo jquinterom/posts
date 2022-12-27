@@ -25,6 +25,9 @@ class PostListViewModel @Inject constructor(
     var usersList = mutableStateOf<List<User>>(listOf())
         private set
 
+    var postDb = mutableStateOf<Post?>(FAKE_POST)
+        private set
+
     init {
         getPostCollection()
         getUserCollection()
@@ -69,7 +72,19 @@ class PostListViewModel @Inject constructor(
         status.value = null
     }
 
-    fun updatePostFavorite(post: Post){
+    fun updatePostFavorite(post: Post) {
         // TODO: register or update favorite post
+    }
+
+    fun getPostByIdDB(postId: Int) {
+        viewModelScope.launch {
+            postDb.value = postRepository.getPostByIdDB(postId).value
+        }
+    }
+
+    fun registerPost(post: Post) {
+        viewModelScope.launch {
+            postRepository.registerPost(post = post)
+        }
     }
 }
