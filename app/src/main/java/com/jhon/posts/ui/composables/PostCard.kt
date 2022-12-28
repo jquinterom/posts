@@ -43,7 +43,9 @@ fun PostCard(
     viewModel.getPostByIdDB(post.id)
     val gradientColors = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
     var currentPost by remember { mutableStateOf(post) }
-    val localPost by remember { mutableStateOf(viewModel.postDb) }
+    val localPost by remember { mutableStateOf(viewModel.postDb.value) }
+
+    Log.d("localPost", localPost.toString())
 
     Card(
         modifier = Modifier
@@ -100,7 +102,7 @@ fun PostCard(
                             Post(post.userId, post.id, post.title, post.body, !currentPost.favorite)
                         viewModel. updateCurrentPost(currentPost)
                     },
-                imageVector = if (currentPost.favorite) {
+                imageVector = if (localPost?.favorite == true) {
                     Icons.Default.Favorite
                 } else {
                     Icons.Default.FavoriteBorder
