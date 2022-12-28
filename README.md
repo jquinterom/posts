@@ -7,11 +7,10 @@ The data is from [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
 You can watch the video about unit and instrumental tests (Jetpack Compose) [Here](https://mega.nz/file/WkczjT7L#RVH3zpESZGZgZop06ZJA9R6v69PfSsKKINmHbltJ-jM).
 
 ### Posts
-![post](https://user-images.githubusercontent.com/87286568/209218158-1084637b-ea35-43d1-8847-5a6febfe08d7.gif)
-
+![posts](https://user-images.githubusercontent.com/87286568/209859288-f387a6e6-ff9a-4a57-8d2f-4430a6125a4c.gif)
 
 ### Post Detail
-![postDetail](https://user-images.githubusercontent.com/87286568/209218315-5dae56e1-d285-4b63-afc9-ecf05302eaed.gif)
+![postDetail](https://user-images.githubusercontent.com/87286568/209859944-50b66bda-ccc1-4060-a5f7-4113f3eb3f7c.gif)
 
 
 ### Users - Albums - Photos
