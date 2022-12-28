@@ -11,7 +11,7 @@ import com.jhon.posts.model.Post
 interface PostDao {
 
     @Query("SELECT * FROM Post WHERE id = :postId")
-    fun getPostById(postId: Int) : LiveData<Post>
+    suspend fun getPostById(postId: Int) : Post
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPost(post: Post)

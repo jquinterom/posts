@@ -15,6 +15,6 @@ interface PostTasks {
     suspend fun getUserById(userId: Int): ApiResponseStatus<User>
 
     // Room
-    suspend fun getPostByIdDB(postId: Int) : LiveData<Post>
+    suspend fun getPostByIdDB(postId: Int) : Post
     suspend fun registerPost(post: Post)
 }

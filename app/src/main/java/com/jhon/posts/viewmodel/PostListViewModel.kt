@@ -1,5 +1,6 @@
 package com.jhon.posts.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -78,13 +79,16 @@ class PostListViewModel @Inject constructor(
 
     fun getPostByIdDB(postId: Int) {
         viewModelScope.launch {
-            postDb.value = postRepository.getPostByIdDB(postId).value
+            postDb.value = postRepository.getPostByIdDB(postId)
         }
     }
 
-    fun registerPost(post: Post) {
+    fun updateCurrentPost(post: Post){
         viewModelScope.launch {
             postRepository.registerPost(post = post)
         }
+        Log.d("currentPostBefore", postDb.value.toString())
+        postDb.value = post
+        Log.d("currentPostAfter", postDb.value.toString())
     }
 }

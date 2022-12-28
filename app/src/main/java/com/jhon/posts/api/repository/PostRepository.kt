@@ -20,7 +20,6 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class PostRepository @Inject constructor(
-    // private val postDao: PostDao,
     private val database: AppDatabase,
     private val apiService: ApiService,
     private val dispatcher: CoroutineDispatcher
@@ -183,7 +182,7 @@ class PostRepository @Inject constructor(
             userDTOMapper.formUserDTOToUserDomain(user)
         }
 
-    override suspend fun getPostByIdDB(postId: Int): LiveData<Post> {
+    override suspend fun getPostByIdDB(postId: Int): Post {
         // return postDao.getPostById(postId = postId)
         return database.postDao().getPostById(postId = postId)
     }

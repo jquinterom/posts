@@ -23,11 +23,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.jhon.posts.R
 import com.jhon.posts.constants.FAKE_POST
 import com.jhon.posts.constants.FAKE_USER
 import com.jhon.posts.model.Post
 import com.jhon.posts.model.User
+import com.jhon.posts.viewmodel.PostListViewModel
 import java.util.*
 
 @OptIn(ExperimentalTextApi::class, ExperimentalMaterialApi::class)
@@ -35,10 +37,13 @@ import java.util.*
 fun PostCard(
     post: Post,
     user: User,
+    viewModel: PostListViewModel = hiltViewModel(),
     onNavigateToPostDetail: (postId: Int) -> Unit,
 ) {
+    viewModel.getPostByIdDB(post.id)
     val gradientColors = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
     var currentPost by remember { mutableStateOf(post) }
+    val localPost by remember { mutableStateOf(viewModel.postDb) }
 
     Card(
         modifier = Modifier
@@ -81,7 +86,6 @@ fun PostCard(
                 ),
             )
 
-
             Icon(
                 modifier = Modifier
                     .constrainAs(iconFavorite) {
@@ -93,8 +97,8 @@ fun PostCard(
                     .size(ButtonDefaults.IconSize)
                     .clickable {
                         currentPost =
-                            Post(post.id, post.userId, post.title, post.body, !currentPost.favorite)
-                        Log.d("post", currentPost.toString())
+                            Post(post.userId, post.id, post.title, post.body, !currentPost.favorite)
+                        viewModel. updateCurrentPost(currentPost)
                     },
                 imageVector = if (currentPost.favorite) {
                     Icons.Default.Favorite
