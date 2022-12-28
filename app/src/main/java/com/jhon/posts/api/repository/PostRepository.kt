@@ -1,6 +1,5 @@
 package com.jhon.posts.api.repository
 
-import androidx.lifecycle.LiveData
 import com.jhon.posts.R
 import com.jhon.posts.api.ApiResponseStatus
 import com.jhon.posts.api.ApiService
@@ -9,7 +8,6 @@ import com.jhon.posts.api.dto.PostDTOMapper
 import com.jhon.posts.api.dto.UserDTOMapper
 import com.jhon.posts.api.makeNetworkCall
 import com.jhon.posts.database.AppDatabase
-import com.jhon.posts.database.dao.PostDao
 import com.jhon.posts.interfaces.PostTasks
 import com.jhon.posts.model.Comment
 import com.jhon.posts.model.Post
@@ -183,7 +181,6 @@ class PostRepository @Inject constructor(
         }
 
     override suspend fun getPostByIdDB(postId: Int): Post {
-        // return postDao.getPostById(postId = postId)
         return database.postDao().getPostById(postId = postId)
     }
 

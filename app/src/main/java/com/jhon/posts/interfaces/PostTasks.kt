@@ -1,6 +1,5 @@
 package com.jhon.posts.interfaces
 
-import androidx.lifecycle.LiveData
 import com.jhon.posts.api.ApiResponseStatus
 import com.jhon.posts.model.Comment
 import com.jhon.posts.model.Post

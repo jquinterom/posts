@@ -1,6 +1,5 @@
 package com.jhon.posts.ui.composables
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -40,12 +39,8 @@ fun PostCard(
     viewModel: PostListViewModel = hiltViewModel(),
     onNavigateToPostDetail: (postId: Int) -> Unit,
 ) {
-    viewModel.getPostByIdDB(post.id)
     val gradientColors = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
     var currentPost by remember { mutableStateOf(post) }
-    val localPost by remember { mutableStateOf(viewModel.postDb.value) }
-
-    Log.d("localPost", localPost.toString())
 
     Card(
         modifier = Modifier
@@ -100,9 +95,9 @@ fun PostCard(
                     .clickable {
                         currentPost =
                             Post(post.userId, post.id, post.title, post.body, !currentPost.favorite)
-                        viewModel. updateCurrentPost(currentPost)
+                        viewModel.updateCurrentPost(currentPost)
                     },
-                imageVector = if (localPost?.favorite == true) {
+                imageVector = if (currentPost.favorite) {
                     Icons.Default.Favorite
                 } else {
                     Icons.Default.FavoriteBorder

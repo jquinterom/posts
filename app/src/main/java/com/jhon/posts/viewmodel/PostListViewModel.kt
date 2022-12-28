@@ -1,6 +1,5 @@
 package com.jhon.posts.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +9,7 @@ import com.jhon.posts.interfaces.PostTasks
 import com.jhon.posts.model.Post
 import com.jhon.posts.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,11 +52,21 @@ class PostListViewModel @Inject constructor(
         apiResponseStatusListPosts: ApiResponseStatus<List<Post>>,
     ) {
         if (apiResponseStatusListPosts is ApiResponseStatus.Success) {
-            postList.value = apiResponseStatusListPosts.data
+            viewModelScope.launch {
+                val postsApi = apiResponseStatusListPosts.data.map {
+                    val localPost = postRepository.getPostByIdDB(it.id)
+                    if (localPost != null) {
+                        Post(it.userId, it.id, it.title, it.body, localPost.favorite)
+                    } else {
+                        Post(it.userId, it.id, it.title, it.body, false)
+                    }
+                }
+                postList.value = postsApi
+            }
         }
-
         status.value = apiResponseStatusListPosts as ApiResponseStatus<Any>
     }
+
 
     @Suppress("UNCHECKED_CAST")
     private fun handleResponseStatusUsers(
@@ -73,22 +82,10 @@ class PostListViewModel @Inject constructor(
         status.value = null
     }
 
-    fun updatePostFavorite(post: Post) {
-        // TODO: register or update favorite post
-    }
-
-    fun getPostByIdDB(postId: Int) {
-        viewModelScope.launch {
-            postDb.value = postRepository.getPostByIdDB(postId)
-        }
-    }
-
-    fun updateCurrentPost(post: Post){
+    fun updateCurrentPost(post: Post) {
         viewModelScope.launch {
             postRepository.registerPost(post = post)
         }
-        Log.d("currentPostBefore", postDb.value.toString())
         postDb.value = post
-        Log.d("currentPostAfter", postDb.value.toString())
     }
 }
