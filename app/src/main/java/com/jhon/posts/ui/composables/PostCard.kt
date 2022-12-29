@@ -22,13 +22,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.jhon.posts.R
 import com.jhon.posts.constants.FAKE_POST
 import com.jhon.posts.constants.FAKE_USER
 import com.jhon.posts.model.Post
 import com.jhon.posts.model.User
-import com.jhon.posts.viewmodel.PostListViewModel
 import java.util.*
 
 @OptIn(ExperimentalTextApi::class, ExperimentalMaterialApi::class)
@@ -36,7 +34,7 @@ import java.util.*
 fun PostCard(
     post: Post,
     user: User,
-    viewModel: PostListViewModel = hiltViewModel(),
+    setFavorite : (post: Post) -> Unit,
     onNavigateToPostDetail: (postId: Int) -> Unit,
 ) {
     val gradientColors = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
@@ -95,7 +93,7 @@ fun PostCard(
                     .clickable {
                         currentPost =
                             Post(post.userId, post.id, post.title, post.body, !currentPost.favorite)
-                        viewModel.updateCurrentPost(currentPost)
+                        setFavorite(currentPost)
                     },
                 imageVector = if (currentPost.favorite) {
                     Icons.Default.Favorite
@@ -125,6 +123,8 @@ fun PostCard(
 fun PostCardPreview() {
     PostCard(
         FAKE_POST,
-        FAKE_USER
-    ) {}
+        FAKE_USER,
+        {},
+        {}
+    )
 }

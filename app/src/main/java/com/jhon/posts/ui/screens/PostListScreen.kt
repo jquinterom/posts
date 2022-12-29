@@ -1,7 +1,6 @@
 package com.jhon.posts.ui.screens
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
@@ -40,7 +39,9 @@ fun PostListScreen(
                 PostCard(
                     post = post,
                     user = user,
-                ) { onNavigateToPostDetail(post.id) }
+                    setFavorite = { viewModel.updatePostDB(post = post) },
+                    onNavigateToPostDetail = { onNavigateToPostDetail(post.id) }
+                )
             }
         }
     }

@@ -32,6 +32,14 @@ class PostRepository {
             TODO("Not yet implemented")
         }
 
+        override suspend fun getPostByIdDB(postId: Int): Post {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun registerPost(post: Post) {
+            TODO("Not yet implemented")
+        }
+
     }
 
     class FakePostRepositoryError : PostTasks {
@@ -52,6 +60,14 @@ class PostRepository {
         }
 
         override suspend fun getUserById(userId: Int): ApiResponseStatus<User> {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun getPostByIdDB(postId: Int): Post {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun registerPost(post: Post) {
             TODO("Not yet implemented")
         }
     }
@@ -85,6 +101,14 @@ class PostRepository {
         }
 
         override suspend fun getUserById(userId: Int): ApiResponseStatus<User> {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun getPostByIdDB(postId: Int): Post {
+            return FAKE_POST
+        }
+
+        override suspend fun registerPost(post: Post) {
             TODO("Not yet implemented")
         }
     }

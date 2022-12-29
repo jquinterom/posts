@@ -4,7 +4,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jhon.posts.api.ApiResponseStatus
-import com.jhon.posts.constants.FAKE_POST
 import com.jhon.posts.interfaces.PostTasks
 import com.jhon.posts.model.Post
 import com.jhon.posts.model.User
@@ -23,9 +22,6 @@ class PostListViewModel @Inject constructor(
         private set
 
     var usersList = mutableStateOf<List<User>>(listOf())
-        private set
-
-    var postDb = mutableStateOf<Post?>(FAKE_POST)
         private set
 
     init {
@@ -82,10 +78,10 @@ class PostListViewModel @Inject constructor(
         status.value = null
     }
 
-    fun updateCurrentPost(post: Post) {
+    fun updatePostDB(post: Post) {
         viewModelScope.launch {
-            postRepository.registerPost(post = post)
+            val postToRegister = Post(post.userId, post.id, post.title, post.body, !post.favorite)
+            postRepository.registerPost(post = postToRegister)
         }
-        postDb.value = post
     }
 }
