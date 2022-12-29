@@ -1,10 +1,7 @@
 package com.jhon.posts.constants
 
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
-import com.jhon.posts.model.Comment
-import com.jhon.posts.model.Photo
-import com.jhon.posts.model.Post
-import com.jhon.posts.model.User
+import com.jhon.posts.model.*
 
 const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 const val GET_ALL_POSTS_URL = "posts"
@@ -34,5 +31,7 @@ val FAKE_PHOTO = Photo(
     url = "https://via.placeholder.com/600/66b7d2",
     thumbnailUrl = "https://via.placeholder.com/150/66b7d2"
 )
+
+val FAKE_ALBUM = Album(1, 1, "Fake Album")
 
 const val DELIMITER_SPLIT = '/'

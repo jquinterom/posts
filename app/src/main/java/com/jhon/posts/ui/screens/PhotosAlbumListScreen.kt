@@ -1,8 +1,11 @@
 package com.jhon.posts.ui.screens
 
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jhon.posts.ui.composables.PhotoCard
 import com.jhon.posts.viewmodel.AlbumViewModel
@@ -16,7 +19,10 @@ fun PhotosAlbumListScreen(
 
     val photos = viewModel.photosList.value
 
-    LazyColumn() {
+    LazyVerticalGrid(
+        modifier = Modifier.fillMaxSize(),
+        columns = GridCells.Fixed(3),
+    ) {
         items(photos) { photo ->
             PhotoCard(photo)
         }

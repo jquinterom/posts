@@ -13,9 +13,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.jhon.posts.R
+import com.jhon.posts.constants.FAKE_ALBUM
 import com.jhon.posts.model.Album
 import java.util.*
 
@@ -72,5 +73,12 @@ fun AlbumCard(
             )
         }
     }
+}
 
+@Composable
+@Preview(showBackground = true)
+fun AlbumCardPreview(){
+    MaterialTheme {
+        AlbumCard(album = FAKE_ALBUM, onNavigateToPhotosList = {})
+    }
 }
