@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jhon.posts.R
 import com.jhon.posts.api.ApiResponseStatus
-import com.jhon.posts.constants.FAKE_POST
 import com.jhon.posts.model.Comment
 import com.jhon.posts.model.User
 import com.jhon.posts.ui.composables.CommentCard
@@ -39,7 +38,6 @@ import java.util.*
 @OptIn(ExperimentalTextApi::class)
 @Composable
 fun PostDetailScreen(
-    postId: Int,
     viewModel: PostDetailViewModel = hiltViewModel(),
 ) {
     val gradientColors = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
@@ -48,10 +46,7 @@ fun PostDetailScreen(
     val user: User = viewModel.user.value
     val comments: MutableState<List<Comment>> = viewModel.listComments
     val statusLoadComments = viewModel.statusLoadComments.value
-
     val status = viewModel.status.value
-
-    // viewModel.getPostDetail(postId)
 
     Column(
         modifier = Modifier
@@ -105,7 +100,7 @@ fun PostDetailScreen(
                 modifier = Modifier
                     .align(alignment = Alignment.Start)
                     .clickable {
-                        viewModel.getComments(postId = postId)
+                        viewModel.getComments(postId = post.value.id)
                     }
                     .fillMaxWidth(),
             ) {
@@ -160,7 +155,5 @@ fun PostDetailScreen(
 @Preview(showBackground = true)
 @Composable
 fun PostDetailScreenPreview() {
-    PostDetailScreen(
-        FAKE_POST.id
-    )
+    PostDetailScreen(    )
 }

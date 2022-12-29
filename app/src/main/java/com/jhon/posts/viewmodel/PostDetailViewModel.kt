@@ -1,6 +1,5 @@
 package com.jhon.posts.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -9,6 +8,7 @@ import com.jhon.posts.api.ApiResponseStatus
 import com.jhon.posts.api.repository.PostRepository
 import com.jhon.posts.constants.FAKE_POST
 import com.jhon.posts.constants.FAKE_USER
+import com.jhon.posts.constants.KEY_POST_ID
 import com.jhon.posts.model.Comment
 import com.jhon.posts.model.Post
 import com.jhon.posts.model.User
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PostDetailViewModel @Inject constructor(
     private val postRepository: PostRepository,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     var post = mutableStateOf(FAKE_POST)
         private set
@@ -44,12 +44,12 @@ class PostDetailViewModel @Inject constructor(
         private set
 
     init {
-        savedStateHandle.get<Int>("postId")?.let {
+        savedStateHandle.get<Int>(KEY_POST_ID)?.let {
             getPostDetail(it)
         }
     }
 
-    fun getPostDetail(postId: Int) {
+    private fun getPostDetail(postId: Int) {
         viewModelScope.launch {
             status.value = ApiResponseStatus.Loading()
             handleResponseStatusPost(postRepository.getPostById(postId))

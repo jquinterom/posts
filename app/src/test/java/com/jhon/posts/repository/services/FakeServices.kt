@@ -1,4 +1,4 @@
-package com.jhon.posts.repository
+package com.jhon.posts.repository.services
 
 import com.jhon.posts.api.ApiService
 import com.jhon.posts.api.dto.*

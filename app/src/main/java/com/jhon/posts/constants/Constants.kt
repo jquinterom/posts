@@ -35,3 +35,6 @@ val FAKE_PHOTO = Photo(
 val FAKE_ALBUM = Album(1, 1, "Fake Album")
 
 const val DELIMITER_SPLIT = '/'
+const val KEY_USER_ID = "userId"
+const val KEY_POST_ID = "postId"
+const val KEY_ALBUM_ID = "albumId"

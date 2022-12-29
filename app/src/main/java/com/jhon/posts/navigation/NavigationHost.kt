@@ -7,6 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.jhon.posts.constants.KEY_ALBUM_ID
+import com.jhon.posts.constants.KEY_POST_ID
+import com.jhon.posts.constants.KEY_USER_ID
 import com.jhon.posts.ui.screens.*
 
 @Composable
@@ -19,12 +22,10 @@ fun NavigationHost(
     ) {
 
         composable(
-            route = Destinations.PostDetailScreen.route + "/{postId}",
-            arguments = listOf(navArgument("postId") { type = NavType.IntType })
-        ) { backStackEntry ->
-            PostDetailScreen(
-                postId = backStackEntry.arguments?.getInt("postId") ?: 0
-            )
+            route = Destinations.PostDetailScreen.route + "/{$KEY_POST_ID}",
+            arguments = listOf(navArgument(KEY_POST_ID) { type = NavType.IntType })
+        ) {
+            PostDetailScreen()
         }
         composable(route = Destinations.PostsListScreen.route) {
             PostListScreen(
@@ -38,21 +39,20 @@ fun NavigationHost(
         }
 
         composable(
-            route = Destinations.PhotosAlbumListScreen.route + "/{albumId}",
-            arguments = listOf(navArgument("albumId") { type = NavType.IntType })
+            route = Destinations.PhotosAlbumListScreen.route + "/{$KEY_ALBUM_ID}",
+            arguments = listOf(navArgument(KEY_ALBUM_ID) { type = NavType.IntType })
         ) { backStackEntry ->
             PhotosAlbumListScreen(
-                albumId = backStackEntry.arguments?.getInt("albumId") ?: 0
+                albumId = backStackEntry.arguments?.getInt(KEY_ALBUM_ID) ?: 0
             )
         }
         composable(
-            route = Destinations.AlbumsListScreen.route + "/{userId}",
-            arguments = listOf(navArgument("userId") {
+            route = Destinations.AlbumsListScreen.route + "/{$KEY_USER_ID}",
+            arguments = listOf(navArgument(KEY_USER_ID) {
                 type = NavType.IntType
             })
-        ) { navBackStackEntry ->
+        ) {
             AlbumListScreen(
-                userId = navBackStackEntry.arguments?.getInt("userId") ?: 0,
                 onNavigateToPhotosList = { albumId: Int -> navController.navigate(Destinations.PhotosAlbumListScreen.route + "/${albumId}") },
             )
         }

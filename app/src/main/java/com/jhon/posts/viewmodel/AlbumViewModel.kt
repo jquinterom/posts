@@ -1,9 +1,11 @@
 package com.jhon.posts.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jhon.posts.api.ApiResponseStatus
+import com.jhon.posts.constants.KEY_USER_ID
 import com.jhon.posts.interfaces.AlbumTask
 import com.jhon.posts.model.Album
 import com.jhon.posts.model.Photo
@@ -14,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AlbumViewModel @Inject constructor(
     private val albumRepository: AlbumTask,
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     var status = mutableStateOf<ApiResponseStatus<Any>?>(null)
         private set
@@ -24,8 +27,14 @@ class AlbumViewModel @Inject constructor(
     var photosList = mutableStateOf<List<Photo>>(listOf())
         private set
 
+    init {
+        savedStateHandle.get<Int>(KEY_USER_ID)?.let {
+            getAlbumsByUserId(it)
+        }
+    }
 
-    fun getAlbumsByUserId(userId: Int){
+
+    private fun getAlbumsByUserId(userId: Int){
         viewModelScope.launch {
             status.value = ApiResponseStatus.Loading()
             handleResponseStatusAlbums(albumRepository.getAlbumsCollectionByUserId(userId = userId))

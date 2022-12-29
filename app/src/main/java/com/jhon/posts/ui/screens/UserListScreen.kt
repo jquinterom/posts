@@ -7,11 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jhon.posts.api.ApiResponseStatus
-import com.jhon.posts.constants.FAKE_USER
 import com.jhon.posts.model.User
 import com.jhon.posts.ui.composables.ErrorDialog
 import com.jhon.posts.ui.composables.LoadingWheel
-import com.jhon.posts.ui.composables.PostCard
 import com.jhon.posts.ui.composables.UserCard
 import com.jhon.posts.viewmodel.PostListViewModel
 

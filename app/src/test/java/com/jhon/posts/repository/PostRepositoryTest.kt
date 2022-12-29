@@ -8,6 +8,7 @@ import com.jhon.posts.constants.FAKE_POST
 import com.jhon.posts.database.AppDatabase
 import com.jhon.posts.model.Post
 import com.jhon.posts.model.User
+import com.jhon.posts.repository.services.FakeServices
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
