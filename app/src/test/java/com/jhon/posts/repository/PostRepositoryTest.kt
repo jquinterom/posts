@@ -1,8 +1,11 @@
 package com.jhon.posts.repository
 
+import android.content.Context
+import androidx.room.Room
 import com.jhon.posts.api.ApiResponseStatus
 import com.jhon.posts.api.repository.PostRepository
 import com.jhon.posts.constants.FAKE_POST
+import com.jhon.posts.database.AppDatabase
 import com.jhon.posts.model.Post
 import com.jhon.posts.model.User
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,6 +17,7 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
+import org.mockito.Mockito.mock
 
 @ExperimentalCoroutinesApi
 class PostRepositoryTest {
@@ -27,16 +31,23 @@ class PostRepositoryTest {
         private var postRepositoryToError: PostRepository? = null
 
         private var postCollection: List<Post>? = null
+        private lateinit var db: AppDatabase
 
         @BeforeClass
         @JvmStatic
         fun beforeClass() {
+            val context = mock(Context::class.java)
+            db = Room.inMemoryDatabaseBuilder(
+                context, AppDatabase::class.java).build()
+
             postRepository = PostRepository(
+                database = db,
                 apiService = FakeServices.FakeApiService(),
                 dispatcher = UnconfinedTestDispatcher()
             )
 
             postRepositoryToError = PostRepository(
+                database = db,
                 apiService = FakeServices.FakeApiServiceToError(),
                 dispatcher = UnconfinedTestDispatcher()
             )
