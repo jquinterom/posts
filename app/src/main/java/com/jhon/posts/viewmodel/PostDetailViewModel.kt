@@ -1,6 +1,8 @@
 package com.jhon.posts.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jhon.posts.api.ApiResponseStatus
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailViewModel @Inject constructor(
-    private val postRepository: PostRepository
+    private val postRepository: PostRepository,
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     var post = mutableStateOf(FAKE_POST)
         private set
@@ -37,8 +40,18 @@ class PostDetailViewModel @Inject constructor(
     var statusLoadComments = mutableStateOf<ApiResponseStatus<Any>?>(null)
         private set
 
+    var status = mutableStateOf<ApiResponseStatus<Any>?>(null)
+        private set
+
+    init {
+        savedStateHandle.get<Int>("postId")?.let {
+            getPostDetail(it)
+        }
+    }
+
     fun getPostDetail(postId: Int) {
         viewModelScope.launch {
+            status.value = ApiResponseStatus.Loading()
             handleResponseStatusPost(postRepository.getPostById(postId))
             handleResponseStatusUser(postRepository.getUserById(userId = post.value.userId))
         }
@@ -79,6 +92,7 @@ class PostDetailViewModel @Inject constructor(
         if (apiResponseStatus is ApiResponseStatus.Success) {
             post.value = apiResponseStatus.data
         }
+        status.value = apiResponseStatus as ApiResponseStatus<Any>
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -86,6 +100,7 @@ class PostDetailViewModel @Inject constructor(
         if (apiResponseStatus is ApiResponseStatus.Success) {
             user.value = apiResponseStatus.data
         }
+        status.value = apiResponseStatus as ApiResponseStatus<Any>
     }
 
     fun resetApiResponseStatus() {

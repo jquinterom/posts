@@ -17,7 +17,11 @@ sealed class Destinations(
     )
     object PostDetailScreen : Destinations(
         route = "postDetail", title = "Post Detail", icon = Icons.Filled.Favorite
-    )
+    ){
+        fun passId(id: Int): String {
+            return "detail?id=$id"
+        }
+    }
     object AlbumsListScreen : Destinations(
         route = "albums", title = "Albums", icon = Icons.Filled.Share
     )

@@ -44,11 +44,14 @@ fun PostDetailScreen(
 ) {
     val gradientColors = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
 
-    viewModel.getPostDetail(postId)
     val post = viewModel.post
     val user: User = viewModel.user.value
     val comments: MutableState<List<Comment>> = viewModel.listComments
     val statusLoadComments = viewModel.statusLoadComments.value
+
+    val status = viewModel.status.value
+
+    // viewModel.getPostDetail(postId)
 
     Column(
         modifier = Modifier
@@ -144,6 +147,13 @@ fun PostDetailScreen(
         }
     }
 
+    if (status is ApiResponseStatus.Loading) {
+        LoadingWheel()
+    } else if (status is ApiResponseStatus.Error) {
+        ErrorDialog(
+            messageId = status.messageId,
+            onErrorDialogDismiss = { viewModel.resetApiResponseStatus() })
+    }
 
 }
 
