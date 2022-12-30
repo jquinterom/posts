@@ -4,17 +4,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -27,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.jhon.posts.R
 import com.jhon.posts.api.ApiResponseStatus
 import com.jhon.posts.model.Comment
+import com.jhon.posts.model.Post
 import com.jhon.posts.model.User
 import com.jhon.posts.ui.composables.CommentCard
 import com.jhon.posts.ui.composables.ErrorDialog
@@ -62,6 +63,21 @@ fun PostDetailScreen(
                 fontSize = 14.sp,
             )
         }
+
+        Icon(
+            modifier = Modifier
+                .align(alignment = Alignment.End)
+                .clip(RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner_shape)))
+                .size(ButtonDefaults.IconSize)
+                .clickable {
+                },
+            imageVector = if (post.value.favorite) {
+                Icons.Default.Favorite
+            } else {
+                Icons.Default.FavoriteBorder
+            },
+            contentDescription = null
+        )
 
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.size_normal_spacer)))
 
@@ -155,5 +171,5 @@ fun PostDetailScreen(
 @Preview(showBackground = true)
 @Composable
 fun PostDetailScreenPreview() {
-    PostDetailScreen(    )
+    PostDetailScreen()
 }
