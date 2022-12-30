@@ -46,7 +46,7 @@ fun PostDetailScreen(
     val post = viewModel.post
     val user: User = viewModel.user.value
     val comments: MutableState<List<Comment>> = viewModel.listComments
-    val statusLoadComments = viewModel.statusLoadComments.value
+    // val statusLoadComments = viewModel.statusLoadComments.value
     val status = viewModel.status.value
 
     Column(
@@ -147,14 +147,6 @@ fun PostDetailScreen(
                     }
                 }
             }
-
-            if (statusLoadComments is ApiResponseStatus.Loading) {
-                LoadingWheel()
-            } else if (statusLoadComments is ApiResponseStatus.Error) {
-                ErrorDialog(
-                    messageId = statusLoadComments.messageId,
-                    onErrorDialogDismiss = { viewModel.resetApiResponseStatus() })
-            }
         }
     }
 
@@ -165,7 +157,6 @@ fun PostDetailScreen(
             messageId = status.messageId,
             onErrorDialogDismiss = { viewModel.resetApiResponseStatus() })
     }
-
 }
 
 @Preview(showBackground = true)

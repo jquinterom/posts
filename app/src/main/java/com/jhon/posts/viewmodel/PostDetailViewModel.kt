@@ -37,9 +37,6 @@ class PostDetailViewModel @Inject constructor(
     var showedComment = mutableStateOf(false)
         private set
 
-    var statusLoadComments = mutableStateOf<ApiResponseStatus<Any>?>(null)
-        private set
-
     var status = mutableStateOf<ApiResponseStatus<Any>?>(null)
         private set
 
@@ -53,7 +50,6 @@ class PostDetailViewModel @Inject constructor(
         viewModelScope.launch {
             status.value = ApiResponseStatus.Loading()
             handleResponseStatusPost(postRepository.getPostById(postId))
-            handleResponseStatusUser(postRepository.getUserById(userId = post.value.userId))
         }
     }
 
@@ -61,7 +57,7 @@ class PostDetailViewModel @Inject constructor(
         viewModelScope.launch {
             if (!statusComments.value) {
                 if (listComments.value.isEmpty()) {
-                    statusLoadComments.value = ApiResponseStatus.Loading()
+                    status.value = ApiResponseStatus.Loading()
                     handleResponseStatusComments(postRepository.getCommentsByPostId(postId))
                 }
             } else {
@@ -84,13 +80,37 @@ class PostDetailViewModel @Inject constructor(
             comments.value = emptyList()
         }
 
-        statusLoadComments.value = apiResponseStatus as ApiResponseStatus<Any>
+        status.value = apiResponseStatus as ApiResponseStatus<Any>
     }
 
     @Suppress("UNCHECKED_CAST")
     private fun handleResponseStatusPost(apiResponseStatus: ApiResponseStatus<Post>) {
         if (apiResponseStatus is ApiResponseStatus.Success) {
-            post.value = apiResponseStatus.data
+            viewModelScope.launch {
+                val postApi = apiResponseStatus.data.let {
+                    val postDB = postRepository.getPostByIdDB(it.id)
+                    if (postDB != null) {
+                        Post(
+                            userId = postDB.userId,
+                            id = postDB.id,
+                            title = postDB.title,
+                            body = postDB.body,
+                            favorite = postDB.favorite
+                        )
+                    } else {
+                        Post(
+                            userId = it.userId,
+                            id = it.id,
+                            title = it.title,
+                            body = it.body,
+                            false
+                        )
+                    }
+                }
+                post.value = postApi
+
+                handleResponseStatusUser(postRepository.getUserById(userId = post.value.userId))
+            }
         }
         status.value = apiResponseStatus as ApiResponseStatus<Any>
     }
@@ -104,7 +124,7 @@ class PostDetailViewModel @Inject constructor(
     }
 
     fun resetApiResponseStatus() {
-        statusLoadComments.value = null
+        status.value = null
     }
 
 }
