@@ -80,7 +80,17 @@ class PostListViewModel @Inject constructor(
 
     fun updatePostDB(post: Post) {
         viewModelScope.launch {
-            val postToRegister = Post(post.userId, post.id, post.title, post.body, !post.favorite)
+            var postToRegister = Post(post.userId, post.id, post.title, post.body, !post.favorite)
+            val localPost = postRepository.getPostByIdDB(post.id)
+            if (localPost != null) {
+                postToRegister = localPost.copy(
+                    userId = localPost.userId,
+                    id = localPost.id,
+                    title = localPost.title,
+                    body = localPost.body,
+                    favorite = !localPost.favorite
+                )
+            }
             postRepository.registerPost(post = postToRegister)
         }
     }

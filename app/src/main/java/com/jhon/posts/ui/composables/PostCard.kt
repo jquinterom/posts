@@ -38,7 +38,7 @@ fun PostCard(
     onNavigateToPostDetail: (postId: Int) -> Unit,
 ) {
     val gradientColors = listOf(MaterialTheme.colors.primary, MaterialTheme.colors.secondary)
-    var currentPost by remember { mutableStateOf(post) }
+    var isFavorite by remember { mutableStateOf(post.favorite) }
 
     Card(
         modifier = Modifier
@@ -91,11 +91,10 @@ fun PostCard(
                     .clip(RoundedCornerShape(dimensionResource(id = R.dimen.rounded_corner_shape)))
                     .size(ButtonDefaults.IconSize)
                     .clickable {
-                        currentPost =
-                            Post(post.userId, post.id, post.title, post.body, !currentPost.favorite)
-                        setFavorite(currentPost)
+                        isFavorite = !isFavorite
+                        setFavorite(post)
                     },
-                imageVector = if (currentPost.favorite) {
+                imageVector = if (isFavorite) {
                     Icons.Default.Favorite
                 } else {
                     Icons.Default.FavoriteBorder
