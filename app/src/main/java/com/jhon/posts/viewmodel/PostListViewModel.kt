@@ -1,6 +1,8 @@
 package com.jhon.posts.viewmodel
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jhon.posts.api.ApiResponseStatus
@@ -15,7 +17,8 @@ import javax.inject.Inject
 class PostListViewModel @Inject constructor(
     private val postRepository: PostTasks,
 ) : ViewModel() {
-    var postList = mutableStateOf<List<Post>>(listOf())
+    // var postList = mutableStateOf<List<Post>>(listOf())
+    var postList by mutableStateOf(listOf<Post>())
         private set
 
     var status = mutableStateOf<ApiResponseStatus<Any>?>(null)
@@ -57,7 +60,7 @@ class PostListViewModel @Inject constructor(
                         Post(it.userId, it.id, it.title, it.body, false)
                     }
                 }
-                postList.value = postsApi
+                postList = postsApi
             }
         }
         status.value = apiResponseStatusListPosts as ApiResponseStatus<Any>
@@ -91,7 +94,16 @@ class PostListViewModel @Inject constructor(
                     favorite = !localPost.favorite
                 )
             }
+            val indexPostToChange = postList.indexOf(post)
+            val postToMove = postList[indexPostToChange]
+
+            postList = postList.toMutableList().also {
+                it.remove(postToMove)
+                it.add(indexPostToChange, postToRegister)
+            }
+
             postRepository.registerPost(post = postToRegister)
+
         }
     }
 }

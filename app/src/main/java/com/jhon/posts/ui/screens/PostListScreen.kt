@@ -22,7 +22,7 @@ fun PostListScreen(
     onNavigateToPostDetail: (postId: Int) -> Unit,
 ) {
     val status = viewModel.status.value
-    val postList: List<Post> = viewModel.postList.value
+    val postList: List<Post> = viewModel.postList
     val usersList: List<User> = viewModel.usersList.value
 
     Scaffold(
