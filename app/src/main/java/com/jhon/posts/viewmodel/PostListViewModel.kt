@@ -95,15 +95,11 @@ class PostListViewModel @Inject constructor(
                 )
             }
             val indexPostToChange = postList.indexOf(post)
-            val postToMove = postList[indexPostToChange]
-
             postList = postList.toMutableList().also {
-                it.remove(postToMove)
-                it.add(indexPostToChange, postToRegister)
+                it[indexPostToChange] = postToRegister
             }
 
             postRepository.registerPost(post = postToRegister)
-
         }
     }
 }

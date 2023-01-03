@@ -127,6 +127,26 @@ class PostDetailViewModel @Inject constructor(
         status.value = null
     }
 
+    fun updatePostDB(postToUpdate: Post) {
+        viewModelScope.launch {
+            var postToRegister = Post(postToUpdate.userId, postToUpdate.id, postToUpdate.title, postToUpdate.body, !postToUpdate.favorite)
+
+            val localPost = postRepository.getPostByIdDB(postToUpdate.id)
+            if (localPost != null) {
+                postToRegister = localPost.copy(
+                    userId = localPost.userId,
+                    id = localPost.id,
+                    title = localPost.title,
+                    body = localPost.body,
+                    favorite = !localPost.favorite
+                )
+            }
+
+            post.value = postToRegister
+            postRepository.registerPost(post = postToRegister)
+        }
+    }
+
 }
 
 
