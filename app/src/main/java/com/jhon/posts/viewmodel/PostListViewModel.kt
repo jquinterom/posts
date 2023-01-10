@@ -17,7 +17,6 @@ import javax.inject.Inject
 class PostListViewModel @Inject constructor(
     private val postRepository: PostTasks,
 ) : ViewModel() {
-    // var postList = mutableStateOf<List<Post>>(listOf())
     var postList by mutableStateOf(listOf<Post>())
         private set
 
@@ -28,11 +27,11 @@ class PostListViewModel @Inject constructor(
         private set
 
     init {
-        getPostCollection()
+        // getPostCollection()
         getUserCollection()
     }
 
-    private fun getPostCollection() {
+    fun getPostCollection() {
         viewModelScope.launch {
             status.value = ApiResponseStatus.Loading()
             handleResponseStatusPosts(postRepository.getPostsCollection())
